@@ -14,6 +14,8 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="8dp">
 
+        <!-- TODO add done icon, and figure out how to edit image -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,7 +23,7 @@
 
             <!-- Media -->
             <ImageView
-                android:id="@+id/trip_photo"
+                android:id="@+id/trip_photo_edit"
                 android:layout_width="130dp"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/content_description_media"
@@ -40,21 +42,32 @@
                     android:padding="16dp">
 
                     <!-- Title, secondary and supporting text -->
-                    <TextView
-                        android:id="@+id/trip_title"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/trip_title_edit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/placeholderTrip"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                        android:hint="@string/placeholderTrip"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                    <TextView
-                        android:id="@+id/trip_dates"
-                        android:layout_width="wrap_content"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/trip_dates_edit"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/placeholderTripDates"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textColor="?android:attr/textColorSecondary" />
+                        android:hint="@string/placeholderTripDates"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
                 </LinearLayout>
@@ -68,16 +81,18 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/trip_people"
+                        android:id="@+id/trip_people_edit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <!-- Add names programatically, here is a placeholder -->
                         <com.google.android.material.chip.Chip
+                            style="@style/Widget.MaterialComponents.Chip.Entry"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/placeholderPersonName"
                             android:textStyle="bold" />
+
 
                         <!-- TODO Change the text style to OVERLINE programatically -->
 
