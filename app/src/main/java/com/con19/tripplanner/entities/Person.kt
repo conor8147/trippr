@@ -11,6 +11,6 @@ class Person(
     var phoneNumber: String
 ) {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id_person")
+    @ColumnInfo(name = "id")
     val id: Long = 0
 }

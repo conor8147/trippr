@@ -19,7 +19,7 @@ class Trip(
     var coverPhoto: String
     ) {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name="id_trip")
+    @ColumnInfo(name="id")
     var id: Long = 0
 
 }
