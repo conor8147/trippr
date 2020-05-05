@@ -12,4 +12,9 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="bodyText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#CC000000</item>
+    </style>
+
 </resources>

@@ -5,20 +5,39 @@ import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
 import com.con19.tripplanner.view.HomePagerAdapter
 import com.con19.tripplanner.R
+import com.con19.tripplanner.controller.PersonController
+import com.con19.tripplanner.controller.TransactionController
+import com.con19.tripplanner.controller.TripController
+import com.con19.tripplanner.entities.PersonDao
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 
 /**
  * Entry point to the app.
- * Contains View Pager that swipes between trips, profile and
+ * Contains View Pager that swipes between trips, people and settings
  */
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
+
+    val personDao = PersonDao()
+
+    val personController = PersonController()
+    val transactionController = TransactionController()
+    val tripController = TripController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initialisePager()
+
+
+    }
+
+    /**
+     * Initialise the ViewPager containing the full-screen fragments
+     */
+    private fun initialisePager() {
         val viewPager: ViewPager2 = findViewById(R.id.pager)
         viewPager.adapter = HomePagerAdapter(this)
 
@@ -26,7 +45,7 @@ class MainActivity : AppCompatActivity(){
 
         tabLayout.apply {
             tabIconTint = null
-            addOnTabSelectedListener(object: OnTabSelectedListener {
+            addOnTabSelectedListener(object : OnTabSelectedListener {
                 override fun onTabReselected(tab: TabLayout.Tab?) {}
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -57,7 +76,5 @@ class MainActivity : AppCompatActivity(){
             tab.tabLabelVisibility = TabLayout.TAB_LABEL_VISIBILITY_UNLABELED
 
         }.attach()
-
-
     }
 }
