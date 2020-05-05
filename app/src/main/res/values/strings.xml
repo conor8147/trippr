@@ -7,4 +7,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="placeholderTrip">Ski Trip</string>
+    <string name="placeholderTripDates">21 Feb - 2 Mar</string>
+    <string name="placeholderPersonName">Conor</string>
 </resources>
