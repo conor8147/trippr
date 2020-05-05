@@ -1,11 +1,11 @@
-package com.con19.tripplanner
+package com.con19.tripplanner.view
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.con19.tripplanner.fragments.PeopleTabFragment
-import com.con19.tripplanner.fragments.SettingsTabFragment
-import com.con19.tripplanner.fragments.TripsTabFragment
+import com.con19.tripplanner.view.fragments.PeopleTabFragment
+import com.con19.tripplanner.view.fragments.SettingsTabFragment
+import com.con19.tripplanner.view.fragments.TripsTabFragment
 
 class HomePagerAdapter(parent: AppCompatActivity): FragmentStateAdapter(parent) {
 

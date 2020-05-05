@@ -1,10 +1,9 @@
-package com.con19.tripplanner.activities
+package com.con19.tripplanner.view.activities
 
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
-import com.con19.tripplanner.HomePagerAdapter
+import com.con19.tripplanner.view.HomePagerAdapter
 import com.con19.tripplanner.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
