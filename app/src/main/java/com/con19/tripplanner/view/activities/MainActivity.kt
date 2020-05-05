@@ -3,12 +3,11 @@ package com.con19.tripplanner.view.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
-import com.con19.tripplanner.view.HomePagerAdapter
+import com.con19.tripplanner.view.adapters.HomePagerAdapter
 import com.con19.tripplanner.R
 import com.con19.tripplanner.controller.PersonController
 import com.con19.tripplanner.controller.TransactionController
 import com.con19.tripplanner.controller.TripController
-import com.con19.tripplanner.entities.PersonDao
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
@@ -18,8 +17,6 @@ import com.google.android.material.tabs.TabLayoutMediator
  * Contains View Pager that swipes between trips, people and settings
  */
 class MainActivity : AppCompatActivity() {
-
-    val personDao = PersonDao()
 
     val personController = PersonController()
     val transactionController = TransactionController()
@@ -39,7 +36,8 @@ class MainActivity : AppCompatActivity() {
      */
     private fun initialisePager() {
         val viewPager: ViewPager2 = findViewById(R.id.pager)
-        viewPager.adapter = HomePagerAdapter(this)
+        viewPager.adapter =
+            HomePagerAdapter(this)
 
         val tabLayout: TabLayout = findViewById(R.id.tab_layout)
 

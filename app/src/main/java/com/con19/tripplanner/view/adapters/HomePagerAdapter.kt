@@ -1,4 +1,4 @@
-package com.con19.tripplanner.view
+package com.con19.tripplanner.view.adapters
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
