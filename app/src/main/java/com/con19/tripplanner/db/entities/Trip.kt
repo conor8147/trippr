@@ -1,4 +1,4 @@
-package com.con19.tripplanner.entities
+package com.con19.tripplanner.db.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,12 +9,15 @@ import java.util.*
 class Trip(
     @ColumnInfo(name = "trip_name")
     var tripName: String,
+
     @ColumnInfo(name = "start_date")
     var startDate: Date,
+
     @ColumnInfo(name = "end_date")
     var endDate: Date,
-    var members: MutableList<Person>,
-    var transactions: MutableList<Transaction>,
+
+    var memberIds: List<Long>,
+
     @ColumnInfo(name = "cover_photo")
     var coverPhoto: String
     ) {

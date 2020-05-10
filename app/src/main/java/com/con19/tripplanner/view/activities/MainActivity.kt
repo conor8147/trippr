@@ -1,13 +1,13 @@
 package com.con19.tripplanner.view.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
-import com.con19.tripplanner.view.adapters.HomePagerAdapter
 import com.con19.tripplanner.R
-import com.con19.tripplanner.controller.PersonController
-import com.con19.tripplanner.controller.TransactionController
-import com.con19.tripplanner.controller.TripController
+import com.con19.tripplanner.view.adapters.HomePagerAdapter
+import com.con19.tripplanner.viewmodel.PersonViewModel
+import com.con19.tripplanner.viewmodel.TransactionViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
@@ -17,18 +17,20 @@ import com.google.android.material.tabs.TabLayoutMediator
  * Contains View Pager that swipes between trips, people and settings
  */
 class MainActivity : AppCompatActivity() {
-
-    val personController = PersonController()
-    val transactionController = TransactionController()
-    val tripController = TripController()
+    
+    private lateinit var personViewModel: PersonViewModel
+    private lateinit var transactionViewModel: TransactionViewModel
+    // TODO: Jasmine to initialise TripViewModel here and set below
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         initialisePager()
 
-
+        personViewModel = ViewModelProvider(this)
+            .get(PersonViewModel::class.java)
+        transactionViewModel = ViewModelProvider(this)
+            .get(TransactionViewModel::class.java)
     }
 
     /**

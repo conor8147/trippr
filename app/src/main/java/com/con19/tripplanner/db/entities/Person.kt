@@ -1,4 +1,4 @@
-package com.con19.tripplanner.entities
+package com.con19.tripplanner.db.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -12,5 +12,5 @@ class Person(
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: Long = 0
+    var id: Long = 0
 }
