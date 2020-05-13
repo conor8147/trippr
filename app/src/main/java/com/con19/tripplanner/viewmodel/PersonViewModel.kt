@@ -1,6 +1,7 @@
 package com.con19.tripplanner.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -18,7 +19,7 @@ class PersonViewModel(application: Application): AndroidViewModel(application) {
 
     private val service: PersonService
 
-    // Using LiveData and caching what allWords returns has several benefits:
+    // Using LiveData and caching what allPeople returns has several benefits:
     //   - We can put an observer on the data (instead of polling for changes) and only update the
     //     the UI when the data actually changes.
     //   - Repository is completely separated from the UI through the ViewModel.
@@ -37,5 +38,11 @@ class PersonViewModel(application: Application): AndroidViewModel(application) {
      */
     fun insertAsync(person: Person): Deferred<Long> = viewModelScope.async(Dispatchers.IO) {
         service.insert(person)
+    }
+
+    fun getPersonById(personId: Long): Person? {
+        return allPeople.value?.find { person ->
+            person.id == personId
+        }
     }
 }

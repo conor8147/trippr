@@ -4,5 +4,5 @@
     android:layout_width="match_parent"
     android:background="@android:color/transparent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.SettingsTabFragment"
+    tools:context=".view.fragments.SettingsHomeFragment"
     android:id="@+id/frameLayout" />

@@ -9,7 +9,7 @@ import com.con19.tripplanner.db.entities.Person
  */
 class PersonService(private val personDao: PersonDao) {
 
-    val allPeople: LiveData<List<Person>> by lazy { personDao.getAll() }
+    val allPeople: LiveData<List<Person>> = personDao.getAll()
 
     fun getPersonById(id: Int) = personDao.getPersonById(id)
 

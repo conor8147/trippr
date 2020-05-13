@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@android:color/transparent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.PeopleTabFragment">
+    tools:context=".view.fragments.PeopleHomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

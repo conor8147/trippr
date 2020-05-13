@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.con19.tripplanner.R
 import com.con19.tripplanner.view.adapters.HomePagerAdapter
-import com.con19.tripplanner.view.fragments.BasePeopleFragment
 import com.con19.tripplanner.view.fragments.PeopleTabFragment
 import com.con19.tripplanner.view.fragments.SettingsTabFragment
 import com.con19.tripplanner.view.fragments.TripsTabFragment
@@ -25,8 +24,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
 
-    private val currentTripsTabFragment: Fragment = TripsTabFragment()
-    private val basePeopleFragment: Fragment = BasePeopleFragment()
+    private val tripsTabFragment  = TripsTabFragment()
+    private val basePeopleFragment: Fragment = PeopleTabFragment()
     private val currentSettingsTabFragment: Fragment = SettingsTabFragment()
 
     private lateinit var personViewModel: PersonViewModel
@@ -51,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.pager)
         viewPager.adapter = HomePagerAdapter(
             this,
-            currentTripsTabFragment,
+            tripsTabFragment,
             basePeopleFragment,
             currentSettingsTabFragment
         )
@@ -91,5 +90,24 @@ class MainActivity : AppCompatActivity() {
             tab.tabLabelVisibility = TabLayout.TAB_LABEL_VISIBILITY_UNLABELED
 
         }.attach()
+    }
+
+    /**
+     * A bit of a hack, but necessary for back in nested fragments to work properly
+     */
+    override fun onBackPressed() {
+        // if there is a fragment and the back stack of this fragment is not empty,
+        // then emulate 'onBackPressed' behaviour, because in default, it is not working
+        val fm = supportFragmentManager
+        for (frag in fm.fragments) {
+            if (frag.isVisible) {
+                val childFm = frag.childFragmentManager
+                if (childFm.backStackEntryCount > 0) {
+                    childFm.popBackStack()
+                    return
+                }
+            }
+        }
+        super.onBackPressed()
     }
 }

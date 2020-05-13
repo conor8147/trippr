@@ -8,14 +8,25 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
 import com.con19.tripplanner.db.entities.Person
+import com.con19.tripplanner.view.fragments.PeopleTabFragment
 import kotlinx.android.synthetic.main.view_people_card.view.*
 
 class PeopleAdapter internal constructor(
-    context: Context
+    context: Context,
+    parent: Any
 ) : RecyclerView.Adapter<PeopleAdapter.PersonViewHolder>(){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     var onPersonClickedListener: OnPersonClickedListener? = null
+    private var listener: OnPersonClickedListener? = null
+
+    init {
+        if (parent is OnPersonClickedListener) {
+            listener = parent
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnPersonClickedListener")
+        }
+    }
 
     var peopleList = emptyList<Person>() // Cached copy of people
         set(person) {
@@ -40,13 +51,14 @@ class PeopleAdapter internal constructor(
 
         holder.apply {
             name.text = currentPerson.nickname
-            onPersonClickedListener?.personId = currentPerson.id
-            view.setOnClickListener(onPersonClickedListener)
+            view.setOnClickListener {
+                listener?.onPersonClicked(currentPerson.id)
+            }
         }
     }
 
-    /**
-     * Simple onLongClickListener extension to allow it to be given a personId as a field.
-     */
-    abstract class OnPersonClickedListener: View.OnClickListener { var personId = 0L }
+    interface OnPersonClickedListener {
+        fun onPersonClicked(personId: Long)
+    }
+
 }

@@ -1,24 +1,33 @@
 package com.con19.tripplanner.view.fragments
 
-
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.con19.tripplanner.R
 
 /**
- * Fragment for the Settings Tab.
+ * A container fragment for all the fragments located on the settings tab.
+ * These are inflated into this fragment as necessary.
+ * All navigation between fragments should be handled here
  */
-class SettingsTabFragment : Fragment() {
+class SettingsTabFragment: Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_settings_tab, container, false)
+        return inflater.inflate(R.layout.fragment_root, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val transaction = childFragmentManager.beginTransaction()
+        // When this container fragment is created, we fill it with our first "real" fragment
+        transaction.replace(R.id.frame, SettingsHomeFragment())
+        transaction.commit()
+    }
 
 }
