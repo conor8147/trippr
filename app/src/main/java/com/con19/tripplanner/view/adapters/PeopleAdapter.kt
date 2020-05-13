@@ -15,6 +15,7 @@ class PeopleAdapter internal constructor(
 ) : RecyclerView.Adapter<PeopleAdapter.PersonViewHolder>(){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
+    var onPersonClickedListener: OnPersonClickedListener? = null
 
     var peopleList = emptyList<Person>() // Cached copy of people
         set(person) {
@@ -36,33 +37,16 @@ class PeopleAdapter internal constructor(
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
         val currentPerson = peopleList[position]
-        holder.name.text = currentPerson.nickname
+
+        holder.apply {
+            name.text = currentPerson.nickname
+            onPersonClickedListener?.personId = currentPerson.id
+            view.setOnClickListener(onPersonClickedListener)
+        }
     }
 
+    /**
+     * Simple onLongClickListener extension to allow it to be given a personId as a field.
+     */
+    abstract class OnPersonClickedListener: View.OnClickListener { var personId = 0L }
 }
-
-// class WordListAdapter internal constructor(
-//        context: Context
-//) : RecyclerView.Adapter<WordListAdapter.WordViewHolder>() {
-//
-//    inner class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        val wordItemView: TextView = itemView.findViewById(R.id.textView)
-//    }
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
-//        val itemView = inflater.inflate(R.layout.recyclerview_item, parent, false)
-//        return WordViewHolder(itemView)
-//    }
-//
-//    override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
-//        val current = words[position]
-//        holder.wordItemView.text = current.word
-//    }
-//
-//    internal fun setWords(words: List<Word>) {
-//        this.words = words
-//        notifyDataSetChanged()
-//    }
-//
-//    override fun getItemCount() = words.size
-//}

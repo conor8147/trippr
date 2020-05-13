@@ -10,4 +10,6 @@
     <string name="placeholderPersonName">Conor</string>
 
     <string name="content_description_media">Trip image</string>
+    <string name="name">Name</string>
+    <string name="number">Number</string>
 </resources>

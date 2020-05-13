@@ -2,10 +2,15 @@ package com.con19.tripplanner.view.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.con19.tripplanner.R
 import com.con19.tripplanner.view.adapters.HomePagerAdapter
+import com.con19.tripplanner.view.fragments.BasePeopleFragment
+import com.con19.tripplanner.view.fragments.PeopleTabFragment
+import com.con19.tripplanner.view.fragments.SettingsTabFragment
+import com.con19.tripplanner.view.fragments.TripsTabFragment
 import com.con19.tripplanner.viewmodel.PersonViewModel
 import com.con19.tripplanner.viewmodel.TransactionViewModel
 import com.google.android.material.tabs.TabLayout
@@ -17,7 +22,13 @@ import com.google.android.material.tabs.TabLayoutMediator
  * Contains View Pager that swipes between trips, people and settings
  */
 class MainActivity : AppCompatActivity() {
-    
+
+    private lateinit var viewPager: ViewPager2
+
+    private val currentTripsTabFragment: Fragment = TripsTabFragment()
+    private val basePeopleFragment: Fragment = BasePeopleFragment()
+    private val currentSettingsTabFragment: Fragment = SettingsTabFragment()
+
     private lateinit var personViewModel: PersonViewModel
     private lateinit var transactionViewModel: TransactionViewModel
     // TODO: Jasmine to initialise TripViewModel here and set below
@@ -37,9 +48,13 @@ class MainActivity : AppCompatActivity() {
      * Initialise the ViewPager containing the full-screen fragments
      */
     private fun initialisePager() {
-        val viewPager: ViewPager2 = findViewById(R.id.pager)
-        viewPager.adapter =
-            HomePagerAdapter(this)
+        viewPager = findViewById(R.id.pager)
+        viewPager.adapter = HomePagerAdapter(
+            this,
+            currentTripsTabFragment,
+            basePeopleFragment,
+            currentSettingsTabFragment
+        )
 
         val tabLayout: TabLayout = findViewById(R.id.tab_layout)
 

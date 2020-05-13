@@ -1,6 +1,7 @@
 package com.con19.tripplanner.view.fragments
 
 
+import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.drawable.InsetDrawable
 import android.os.Bundle
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
 import com.con19.tripplanner.view.adapters.PeopleAdapter
+import com.con19.tripplanner.view.adapters.PeopleAdapter.OnPersonClickedListener
 import com.con19.tripplanner.viewmodel.PersonViewModel
 
 /**
@@ -24,6 +26,8 @@ class PeopleTabFragment : Fragment() {
 
     private lateinit var viewManager: LinearLayoutManager
     private lateinit var personViewModel: PersonViewModel
+
+    private var listener: OnPersonSelectedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +49,13 @@ class PeopleTabFragment : Fragment() {
         val recyclerView: RecyclerView = layout.findViewById(R.id.recyclerView)
         val peopleAdapter = PeopleAdapter(requireContext())
 
+        // Fire personSelectedListener when item is long clicked
+        peopleAdapter.onPersonClickedListener = object : OnPersonClickedListener() {
+            override fun onClick(v: View?) {
+                listener?.onPersonSelected(personId)
+            }
+        }
+
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
@@ -52,11 +63,29 @@ class PeopleTabFragment : Fragment() {
             setDividers()
         }
 
-        personViewModel.allPeople.observe(viewLifecycleOwner, Observer {people ->
+        personViewModel.allPeople.observe(viewLifecycleOwner, Observer { people ->
             // Update the cached copy of the words in the adapter.
             people?.let { peopleAdapter.peopleList = it }
         })
 
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (parentFragment is BasePeopleFragment) {
+            listener = parentFragment as BasePeopleFragment
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnPersonSelectedListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
+    interface OnPersonSelectedListener {
+        fun onPersonSelected(personId: Long)
     }
 
     /**
