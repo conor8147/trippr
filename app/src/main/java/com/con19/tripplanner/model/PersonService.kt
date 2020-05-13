@@ -11,7 +11,7 @@ class PersonService(private val personDao: PersonDao) {
 
     val allPeople: LiveData<List<Person>> by lazy { personDao.getAll() }
 
-    fun getPersonById(id: Int) = personDao.getPersonById(id)
+    suspend fun getPersonById(id: Long) = personDao.getPersonById(id)
 
     suspend fun insert(person: Person) = personDao.insert(person)
 

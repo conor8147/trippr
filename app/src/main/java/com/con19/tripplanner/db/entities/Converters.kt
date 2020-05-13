@@ -19,11 +19,14 @@ class Converters {
 
     @TypeConverter
     fun idListToString(idList: List<Long>): String {
-        return idList.joinToString()
+        return idList.joinToString(",")
     }
 
     @TypeConverter
     fun stringToIdList(ids: String): List<Long> {
-        return ids.split(",").map { it.toLong() }
+        if (ids == "") {
+            return listOf()
+        }
+        return ids.split(", ").map { it.toLong() }
     }
 }

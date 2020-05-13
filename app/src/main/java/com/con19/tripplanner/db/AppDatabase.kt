@@ -15,6 +15,7 @@ import com.con19.tripplanner.db.dao.TripDao
 import com.con19.tripplanner.db.entities.Converters
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.util.*
 
 @Database(entities = [Person::class, Transaction::class, Trip::class], version = 1)
 @TypeConverters(Converters::class)
@@ -38,6 +39,7 @@ abstract class AppDatabase : RoomDatabase() {
             INSTANCE?.let { database ->
                 scope.launch {
                     populatePeopleDatabase(database.personDao())
+                    populateTripDatabase(database.tripDao())
                 }
             }
         }
@@ -58,6 +60,19 @@ abstract class AppDatabase : RoomDatabase() {
 
             testPeople.forEach {
                 personDao.insert(it)
+            }
+        }
+
+        suspend fun populateTripDatabase(tripDao: TripDao) {
+            // Delete all content here.
+            tripDao.deleteAll()
+
+            val testTrips = listOf(
+                Trip("Ski Trip", Date(), Date(), listOf(1,2,3), null)
+            )
+
+            testTrips.forEach {
+                tripDao.insert(it)
             }
         }
     }

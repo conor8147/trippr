@@ -16,7 +16,7 @@ import kotlinx.coroutines.async
  */
 class PersonViewModel(application: Application): AndroidViewModel(application) {
 
-    private val service: PersonService
+    val service: PersonService
 
     // Using LiveData and caching what allWords returns has several benefits:
     //   - We can put an observer on the data (instead of polling for changes) and only update the

@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.con19.tripplanner.R
+import com.con19.tripplanner.db.dao.TripDao
+import com.con19.tripplanner.model.PersonService
+import com.con19.tripplanner.model.TripService
 import com.con19.tripplanner.view.adapters.HomePagerAdapter
 import com.con19.tripplanner.viewmodel.PersonViewModel
 import com.con19.tripplanner.viewmodel.TransactionViewModel
@@ -17,6 +20,8 @@ import com.google.android.material.tabs.TabLayoutMediator
  * Contains View Pager that swipes between trips, people and settings
  */
 class MainActivity : AppCompatActivity() {
+
+    lateinit var personService: PersonService
     
     private lateinit var personViewModel: PersonViewModel
     private lateinit var transactionViewModel: TransactionViewModel
@@ -31,6 +36,8 @@ class MainActivity : AppCompatActivity() {
             .get(PersonViewModel::class.java)
         transactionViewModel = ViewModelProvider(this)
             .get(TransactionViewModel::class.java)
+
+        personService = personViewModel.service
     }
 
     /**
