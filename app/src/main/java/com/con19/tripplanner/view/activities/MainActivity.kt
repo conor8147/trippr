@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.con19.tripplanner.R
+import com.con19.tripplanner.db.dao.TripDao
+import com.con19.tripplanner.model.PersonService
+import com.con19.tripplanner.model.TripService
 import com.con19.tripplanner.view.adapters.HomePagerAdapter
 import com.con19.tripplanner.view.fragments.PeopleTabFragment
 import com.con19.tripplanner.view.fragments.SettingsTabFragment
@@ -28,6 +31,8 @@ class MainActivity : AppCompatActivity() {
     private val basePeopleFragment: Fragment = PeopleTabFragment()
     private val currentSettingsTabFragment: Fragment = SettingsTabFragment()
 
+    lateinit var personService: PersonService
+
     private lateinit var personViewModel: PersonViewModel
     private lateinit var transactionViewModel: TransactionViewModel
     // TODO: Jasmine to initialise TripViewModel here and set below
@@ -41,6 +46,8 @@ class MainActivity : AppCompatActivity() {
             .get(PersonViewModel::class.java)
         transactionViewModel = ViewModelProvider(this)
             .get(TransactionViewModel::class.java)
+
+        personService = personViewModel.service
     }
 
     /**

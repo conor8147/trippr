@@ -12,7 +12,7 @@ interface PersonDao {
     fun getAll(): LiveData<List<Person>>
 
     @Query("SELECT * FROM people WHERE id = :id")
-    fun getPersonById(id: Int): Person
+    suspend fun getPersonById(id: Long): Person
 
     @Insert
     suspend fun insert(person: Person): Long

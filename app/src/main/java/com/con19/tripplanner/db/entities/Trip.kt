@@ -19,7 +19,7 @@ class Trip(
     var memberIds: List<Long>,
 
     @ColumnInfo(name = "cover_photo")
-    var coverPhoto: String
+    var coverPhoto: String?
     ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="id")
