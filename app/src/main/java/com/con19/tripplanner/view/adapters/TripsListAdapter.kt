@@ -15,8 +15,7 @@ import com.google.android.material.chip.ChipGroup
 import kotlinx.android.synthetic.main.view_trip_card.view.*
 
 class TripsListAdapter internal constructor(
-    private val context: Context,
-    private val personService: PersonService
+    private val context: Context
 ) : RecyclerView.Adapter<TripsListAdapter.TripViewHolder>(){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
