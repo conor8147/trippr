@@ -27,6 +27,6 @@ class Converters {
         if (ids == "") {
             return listOf()
         }
-        return ids.split(", ").map { it.toLong() }
+        return ids.split(",").map { it.toLong() }
     }
 }

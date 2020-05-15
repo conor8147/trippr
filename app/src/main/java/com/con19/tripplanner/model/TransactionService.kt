@@ -8,8 +8,6 @@ import com.con19.tripplanner.db.entities.Transaction
  */
 class TransactionService(private val transactionDao: TransactionDao) {
 
-    fun getTransactionsForTrip(tripId: Int) = transactionDao.getTransactionsForTrip(tripId)
-
     fun getTransactionById(transactionId: Int) = transactionDao.getTransactionById(transactionId)
 
     suspend fun insert(transaction: Transaction) = transactionDao.insert(transaction)

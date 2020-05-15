@@ -9,24 +9,14 @@ import java.util.*
     tableName = "transactions"
 )
 class Transaction(
-    @ColumnInfo(name = "name")
-    var transactionName: String,
-
-    @ColumnInfo(name = "creation_date")
+    var name: String,
     var creationDate: Date,
-
-    @ColumnInfo(name = "id_trip")
     var tripId: Long,
-
     var memberIds: List<Long>,
-
-    @ColumnInfo(name = "paid")
     var paid: Boolean,
-
     var cost: Int,
     var image: String
 ) {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    var id: Long = 0
+    var transactionId: Long = 0
 }

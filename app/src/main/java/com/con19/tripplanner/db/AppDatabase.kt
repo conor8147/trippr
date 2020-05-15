@@ -6,18 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.con19.tripplanner.db.entities.Person
-import com.con19.tripplanner.db.entities.Transaction
-import com.con19.tripplanner.db.entities.Trip
 import com.con19.tripplanner.db.dao.PersonDao
 import com.con19.tripplanner.db.dao.TransactionDao
 import com.con19.tripplanner.db.dao.TripDao
-import com.con19.tripplanner.db.entities.Converters
+import com.con19.tripplanner.db.entities.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.*
 
-@Database(entities = [Person::class, Transaction::class, Trip::class], version = 1)
+@Database(entities = [Person::class, Transaction::class, Trip::class, TripPersonCrossRef::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -33,6 +30,8 @@ abstract class AppDatabase : RoomDatabase() {
     private class AppDatabaseCallback(
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
+
+        private val personIds = mutableListOf<Long>()
 
         override fun onOpen(db: SupportSQLiteDatabase) {
             super.onOpen(db)
@@ -59,7 +58,7 @@ abstract class AppDatabase : RoomDatabase() {
             )
 
             testPeople.forEach {
-                personDao.insert(it)
+                personIds.add(personDao.insert(it))
             }
         }
 
@@ -67,12 +66,10 @@ abstract class AppDatabase : RoomDatabase() {
             // Delete all content here.
             tripDao.deleteAll()
 
-            val testTrips = listOf(
-                Trip("Ski Trip", Date(), Date(), listOf(1,2,3), null)
-            )
+            val tripId = tripDao.insert(Trip("Ski Trip", Date(), Date(), null))
 
-            testTrips.forEach {
-                tripDao.insert(it)
+            personIds.forEach {
+                tripDao.insert(TripPersonCrossRef(tripId, it))
             }
         }
     }
