@@ -17,6 +17,7 @@ interface TripDao {
     /**
      * Inserts a row into the cross reference table only. Use to link a trip with a person
      */
+    @Transaction
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(tripPersonCrossRef: TripPersonCrossRef): Long
 
