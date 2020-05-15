@@ -73,7 +73,6 @@ abstract class AppDatabase : RoomDatabase() {
             personIds.forEach {
                 tripDao.insert(TripPersonCrossRef(tripId, it))
             }
-
         }
     }
 
