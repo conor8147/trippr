@@ -1,7 +1,5 @@
 package com.con19.tripplanner.view.fragments
 
-
-import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.drawable.InsetDrawable
 import android.os.Bundle
@@ -16,18 +14,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
 import com.con19.tripplanner.view.adapters.PeopleAdapter
-import com.con19.tripplanner.view.adapters.PeopleAdapter.OnPersonClickedListener
 import com.con19.tripplanner.viewmodel.PersonViewModel
 
 /**
  * Fragment for the Settings Tab.
  */
-class PeopleHomeFragment : Fragment(), PeopleAdapter.OnPersonClickedListener {
+class PeopleHomeFragment : Fragment() {
 
     private lateinit var viewManager: LinearLayoutManager
     private lateinit var personViewModel: PersonViewModel
-
-    private var listener: OnPersonSelectedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +42,7 @@ class PeopleHomeFragment : Fragment(), PeopleAdapter.OnPersonClickedListener {
     private fun initialiseRecyclerView(layout: View) {
         viewManager = LinearLayoutManager(requireContext())
         val recyclerView: RecyclerView = layout.findViewById(R.id.recyclerView)
-        val peopleAdapter = PeopleAdapter(requireContext(), this)
+        val peopleAdapter = PeopleAdapter(requireContext())
 
         recyclerView.apply {
             setHasFixedSize(true)
@@ -62,23 +57,6 @@ class PeopleHomeFragment : Fragment(), PeopleAdapter.OnPersonClickedListener {
         })
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (parentFragment is PeopleTabFragment) {
-            listener = parentFragment as PeopleTabFragment
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnPersonSelectedListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    interface OnPersonSelectedListener {
-        fun onPersonSelected(personId: Long)
-    }
 
     /**
      * Set Decorations for recyclerView
@@ -97,10 +75,5 @@ class PeopleHomeFragment : Fragment(), PeopleAdapter.OnPersonClickedListener {
         )
         dividerItemDecoration.setDrawable(insetDivider)
         this.addItemDecoration(dividerItemDecoration)
-
-    }
-
-    override fun onPersonClicked(personId: Long) {
-        listener?.onPersonSelected(personId)
     }
 }

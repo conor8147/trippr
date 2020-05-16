@@ -15,7 +15,7 @@ interface TransactionDao {
     fun getAll(): LiveData<List<TransactionWithPeople>>
 
     @Query("SELECT * FROM transactions WHERE tripId = :tripId")
-    fun getTransactionsForTripWithId(tripId: Long): LiveData<TransactionWithPeople>
+    fun getTransactionsForTripWithId(tripId: Long): LiveData<List<TransactionWithPeople>>
 
     @Query("UPDATE transactions SET paid = :newPaidStatus WHERE transactionId = :transactionId")
     fun updatePaidStatusForTransaction(transactionId: Long, newPaidStatus: Boolean)

@@ -11,7 +11,7 @@ import com.con19.tripplanner.db.entities.TransactionWithPeople
  */
 class TransactionService(private val transactionDao: TransactionDao) {
 
-    fun getTransactionsForTripWithId(tripId: Long): LiveData<TransactionWithPeople> =
+    fun getTransactionsForTripWithId(tripId: Long): LiveData<List<TransactionWithPeople>> =
         transactionDao.getTransactionsForTripWithId(tripId)
 
     suspend fun insert(transaction: Transaction) = transactionDao.insert(transaction)

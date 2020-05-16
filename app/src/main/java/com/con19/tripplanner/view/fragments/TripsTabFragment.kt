@@ -26,7 +26,7 @@ class TripsTabFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val transaction = childFragmentManager.beginTransaction()
         // When this container fragment is created, we fill it with our first "real" fragment
-        transaction.replace(R.id.frame, TripViewFragment())
+        transaction.replace(R.id.frame, TripsHomeFragment())
         transaction.commit()
     }
 }

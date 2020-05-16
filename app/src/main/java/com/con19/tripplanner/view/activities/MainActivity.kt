@@ -6,10 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.con19.tripplanner.R
-import com.con19.tripplanner.db.dao.TripDao
 import com.con19.tripplanner.model.PersonService
-import com.con19.tripplanner.model.TripService
 import com.con19.tripplanner.view.adapters.HomePagerAdapter
+import com.con19.tripplanner.view.adapters.PeopleAdapter
 import com.con19.tripplanner.view.fragments.PeopleTabFragment
 import com.con19.tripplanner.view.fragments.SettingsTabFragment
 import com.con19.tripplanner.view.fragments.TripsTabFragment
@@ -23,15 +22,14 @@ import com.google.android.material.tabs.TabLayoutMediator
  * Entry point to the app.
  * Contains View Pager that swipes between trips, people and settings
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PeopleAdapter.OnPersonClickedListener  {
 
     private lateinit var viewPager: ViewPager2
 
     private val tripsTabFragment  = TripsTabFragment()
-    private val basePeopleFragment: Fragment = PeopleTabFragment()
-    private val currentSettingsTabFragment: Fragment = SettingsTabFragment()
+    private val peopleTabFragment = PeopleTabFragment()
+    private val currentSettingsTabFragment = SettingsTabFragment()
 
-    lateinit var personService: PersonService
 
     private lateinit var personViewModel: PersonViewModel
     private lateinit var transactionViewModel: TransactionViewModel
@@ -46,8 +44,6 @@ class MainActivity : AppCompatActivity() {
             .get(PersonViewModel::class.java)
         transactionViewModel = ViewModelProvider(this)
             .get(TransactionViewModel::class.java)
-
-        personService = personViewModel.service
     }
 
     /**
@@ -58,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = HomePagerAdapter(
             this,
             tripsTabFragment,
-            basePeopleFragment,
+            peopleTabFragment,
             currentSettingsTabFragment
         )
 
@@ -116,5 +112,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         super.onBackPressed()
+    }
+
+    override fun onPersonClicked(personId: Long) {
+        peopleTabFragment.openEditPersonTab(personId)
     }
 }
