@@ -11,10 +11,7 @@ interface TransactionDao {
     @Query ("SELECT * FROM transactions")
     fun getAll(): LiveData<List<Transaction>>
 
-    @Query("SELECT * FROM transactions WHERE id_trip = :tripId")
-    fun getTransactionsForTrip(tripId: Int): LiveData<List<Transaction>>
-
-    @Query("SELECT * FROM transactions WHERE id = :id")
+    @Query("SELECT * FROM transactions WHERE transactionId = :id")
     fun getTransactionById(id: Int): Transaction
 
     @Insert

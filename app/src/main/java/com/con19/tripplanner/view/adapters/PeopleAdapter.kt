@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
 import com.con19.tripplanner.db.entities.Person
-import com.con19.tripplanner.view.fragments.PeopleTabFragment
 import kotlinx.android.synthetic.main.view_people_card.view.*
 
 class PeopleAdapter internal constructor(
@@ -50,9 +49,9 @@ class PeopleAdapter internal constructor(
         val currentPerson = peopleList[position]
 
         holder.apply {
-            name.text = currentPerson.nickname
+            name.text = currentPerson.nickname + ' ' + currentPerson.personId.toString()
             view.setOnClickListener {
-                listener?.onPersonClicked(currentPerson.id)
+                listener?.onPersonClicked(currentPerson.personId)
             }
         }
     }

@@ -11,6 +11,9 @@ interface PersonDao {
     @Query ("SELECT * FROM people")
     fun getAll(): LiveData<List<Person>>
 
+    @Query("SELECT * FROM people WHERE personId = :id")
+    suspend fun getPersonById(id: Long): Person
+
     @Insert
     suspend fun insert(person: Person): Long
 

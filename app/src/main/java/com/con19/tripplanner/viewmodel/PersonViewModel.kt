@@ -1,7 +1,6 @@
 package com.con19.tripplanner.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -42,7 +41,7 @@ class PersonViewModel(application: Application): AndroidViewModel(application) {
 
     fun getPersonById(personId: Long): Person? {
         return allPeople.value?.find { person ->
-            person.id == personId
+            person.personId == personId
         }
     }
 }

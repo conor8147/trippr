@@ -8,11 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
-import com.con19.tripplanner.db.entities.Trip
+import com.con19.tripplanner.db.entities.TripWithPeople
 import com.con19.tripplanner.model.PersonService
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import kotlinx.android.synthetic.main.view_people_card.view.*
 import kotlinx.android.synthetic.main.view_trip_card.view.*
 
 class TripsListAdapter internal constructor(
@@ -22,7 +21,7 @@ class TripsListAdapter internal constructor(
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-    var tripList = emptyList<Trip>()
+    var tripList = emptyList<TripWithPeople>()
         set(trip) {
             field = trip
             notifyDataSetChanged()
@@ -43,12 +42,13 @@ class TripsListAdapter internal constructor(
     override fun getItemCount(): Int =  tripList.size
 
     override fun onBindViewHolder(holder: TripViewHolder, position: Int) {
-        val currentTrip = tripList[position]
-        holder.tripTitle.text = currentTrip.tripName
-        holder.tripDates.text = currentTrip.startDate.toString() + " - " + currentTrip.endDate
+        val currentTripWithMembers = tripList[position]
+        holder.tripTitle.text = currentTripWithMembers.trip.tripName
+        holder.tripDates.text = "${currentTripWithMembers.trip.startDate} - ${currentTripWithMembers.trip.endDate}"
+        holder.tripPeople.removeAllViews()
         // holder.tripPhoto.setImageResource(currentTrip.coverPhoto)
-        currentTrip.memberIds.forEach {
-            val name = personService.getPersonById(it)?.nickname ?: "Not Found"
+        currentTripWithMembers.people.forEach {
+            val name = it.nickname
             val chip = Chip(context)
             chip.text = name
             holder.tripPeople.addView(chip)

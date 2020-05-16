@@ -1,28 +1,30 @@
 package com.con19.tripplanner.db.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 import java.util.*
 
 @Entity(tableName = "trips")
 class Trip(
-    @ColumnInfo(name = "trip_name")
     var tripName: String,
-
-    @ColumnInfo(name = "start_date")
     var startDate: Date,
-
-    @ColumnInfo(name = "end_date")
     var endDate: Date,
-
-    var memberIds: List<Long>,
-
-    @ColumnInfo(name = "cover_photo")
     var coverPhoto: String?
     ) {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name="id")
-    var id: Long = 0
-
+    var tripId: Long = 0
 }
+
+data class TripWithPeople(
+    @Embedded val trip: Trip,
+    @Relation(
+        parentColumn = "tripId",
+        entity = Person::class,
+        entityColumn = "personId",
+        associateBy = Junction(
+            value = TripPersonCrossRef::class,
+            parentColumn = "tripId",
+            entityColumn = "personId"
+            )
+    )
+    val people: List<Person>
+)
