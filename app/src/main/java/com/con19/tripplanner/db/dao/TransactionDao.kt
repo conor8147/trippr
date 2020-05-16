@@ -14,8 +14,11 @@ interface TransactionDao {
     @Query ("SELECT * FROM transactions")
     fun getAll(): LiveData<List<TransactionWithPeople>>
 
-//    @Query("SELECT * FROM transactions WHERE tripId = :tripId")
-//    fun getTransactionsForTripWithId(tripId: Long): LiveData<TransactionWithPeople>
+    @Query("SELECT * FROM transactions WHERE tripId = :tripId")
+    fun getTransactionsForTripWithId(tripId: Long): LiveData<TransactionWithPeople>
+
+    @Query("UPDATE transactions SET paid = :newPaidStatus WHERE transactionId = :transactionId")
+    fun updatePaidStatusForTransaction(transactionId: Long, newPaidStatus: Boolean)
 
     @Insert
     suspend fun insert(transaction : Transaction): Long
@@ -25,9 +28,6 @@ interface TransactionDao {
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(transactionPersonCrossRef: TransactionPersonCrossRef): Long
-
-    @Update
-    suspend fun update(transaction: Transaction)
 
     @Delete
     suspend fun delete(transaction: Transaction)

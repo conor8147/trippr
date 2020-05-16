@@ -9,6 +9,7 @@ import com.con19.tripplanner.model.TransactionService
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class TransactionViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -19,6 +20,8 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
         service = TransactionService.getInstance(transactionDao)
     }
 
+    fun getTransactionsForTrip(tripId: Long) = service.getTransactionsForTripWithId(tripId)
+
     /**
      * Launches a new coroutine to insert the data in a non-blocking way
      * viewModelScope is automatically cancelled when the ViewModel is cleared.
@@ -28,5 +31,16 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
         service.insert(transaction)
     }
 
-    fun getTransactionsForTrip(tripId: Int){}
+    fun addPersonToTransaction(transactionId: Long, personId: Long) = viewModelScope.launch(Dispatchers.IO) {
+        service.addPersonToTransaction(transactionId, personId)
+    }
+
+
+    fun removePersonFromTransaction(transactionId: Long, personId: Long) = viewModelScope.launch(Dispatchers.IO) {
+        service.removePersonFromTransaction(transactionId, personId)
+    }
+
+    fun changeTransactionPaidStatus(transactionId: Long, newPaidStatus: Boolean) {
+        service.changeTransactionPaidStatus(transactionId, newPaidStatus)
+    }
 }
