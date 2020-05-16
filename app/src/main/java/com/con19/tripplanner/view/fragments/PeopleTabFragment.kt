@@ -12,7 +12,7 @@ import com.con19.tripplanner.R
  * These are inflated into this fragment as necessary.
  * All navigation between fragments should be handled here
  */
-class PeopleTabFragment : Fragment(), PeopleHomeFragment.OnPersonSelectedListener {
+class PeopleTabFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,11 +30,7 @@ class PeopleTabFragment : Fragment(), PeopleHomeFragment.OnPersonSelectedListene
         transaction.commit()
     }
 
-    override fun onPersonSelected(personId: Long) {
-        openEditPersonTab(personId)
-    }
-
-    private fun openEditPersonTab(personId: Long) {
+    fun openEditPersonTab(personId: Long) {
         val newFrag = EditPersonFragment.newInstance(personId)
         val transaction = childFragmentManager.beginTransaction()
         transaction.replace(R.id.frame, newFrag)

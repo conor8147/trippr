@@ -8,28 +8,27 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
 import com.con19.tripplanner.db.entities.Person
+import com.con19.tripplanner.view.activities.MainActivity
 import kotlinx.android.synthetic.main.view_people_card.view.*
 
 class PeopleAdapter internal constructor(
-    context: Context,
-    parent: Any
+    context: Context
 ) : RecyclerView.Adapter<PeopleAdapter.PersonViewHolder>(){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    var onPersonClickedListener: OnPersonClickedListener? = null
     private var listener: OnPersonClickedListener? = null
 
     init {
-        if (parent is OnPersonClickedListener) {
-            listener = parent
+        if (context is MainActivity) {
+            listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnPersonClickedListener")
         }
     }
 
     var peopleList = emptyList<Person>() // Cached copy of people
-        set(person) {
-            field = person
+        set(peopleList) {
+            field = peopleList
             notifyDataSetChanged()
         }
 

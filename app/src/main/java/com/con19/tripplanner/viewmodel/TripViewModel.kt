@@ -40,4 +40,10 @@ class TripViewModel(application: Application) : AndroidViewModel(application) {
         service.removePersonFromTrip(tripId, personId)
     }
 
+    fun getTripById(tripId: Long): TripWithPeople? {
+        return allTrips.value?.find {
+            it.trip.tripId == tripId
+        }
+    }
+
 }

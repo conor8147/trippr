@@ -41,8 +41,7 @@ class TripsHomeFragment : Fragment() {
     private fun createRecyclerView(view: View) {
         val viewManager = LinearLayoutManager(requireContext())
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
-        val tripsListAdapter = TripsListAdapter(requireContext(),
-            (requireActivity() as MainActivity).personService
+        val tripsListAdapter = TripsListAdapter(requireContext()
         )
         recyclerView.apply {
             setHasFixedSize(true)

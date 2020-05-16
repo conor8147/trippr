@@ -14,7 +14,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.*
 
-@Database(entities = [Person::class, Transaction::class, Trip::class, TripPersonCrossRef::class], version = 1)
+@Database(
+    entities = [Person::class,
+        Transaction::class,
+        Trip::class,
+        TripPersonCrossRef::class,
+        TransactionPersonCrossRef::class
+    ], version = 1
+)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
