@@ -10,21 +10,31 @@ import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
 import com.con19.tripplanner.db.entities.TripWithPeople
 import com.con19.tripplanner.model.PersonService
+import com.con19.tripplanner.view.activities.MainActivity
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import kotlinx.android.synthetic.main.view_trip_card.view.*
 
 class TripsListAdapter internal constructor(
     private val context: Context
-) : RecyclerView.Adapter<TripsListAdapter.TripViewHolder>(){
+) : RecyclerView.Adapter<TripsListAdapter.TripViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
+    private lateinit var listener: OnTripClickedListener
 
     var tripList = emptyList<TripWithPeople>()
         set(trip) {
             field = trip
             notifyDataSetChanged()
         }
+
+    init {
+        if (context is MainActivity) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnTripClickedListener")
+        }
+    }
 
     class TripViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val tripTitle: TextView = view.trip_title
@@ -38,12 +48,13 @@ class TripsListAdapter internal constructor(
         return TripViewHolder(tripCard)
     }
 
-    override fun getItemCount(): Int =  tripList.size
+    override fun getItemCount(): Int = tripList.size
 
     override fun onBindViewHolder(holder: TripViewHolder, position: Int) {
         val currentTripWithMembers = tripList[position]
         holder.tripTitle.text = currentTripWithMembers.trip.tripName
-        holder.tripDates.text = "${currentTripWithMembers.trip.startDate} - ${currentTripWithMembers.trip.endDate}"
+        holder.tripDates.text =
+            "${currentTripWithMembers.trip.startDate} - ${currentTripWithMembers.trip.endDate}"
         holder.tripPeople.removeAllViews()
         // holder.tripPhoto.setImageResource(currentTrip.coverPhoto)
         currentTripWithMembers.people.forEach {
@@ -52,5 +63,14 @@ class TripsListAdapter internal constructor(
             chip.text = name
             holder.tripPeople.addView(chip)
         }
+
+        // enable click on link to go the the trip view for that trip
+        holder.view.setOnClickListener {
+            listener?.onTripClicked(currentTripWithMembers.trip.tripId)
+        }
+    }
+
+    interface OnTripClickedListener {
+        fun onTripClicked(tripId: Long)
     }
 }

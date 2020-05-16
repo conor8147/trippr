@@ -19,6 +19,8 @@ import com.con19.tripplanner.view.adapters.TransactionsAdapter
 import com.con19.tripplanner.viewmodel.PersonViewModel
 import com.con19.tripplanner.viewmodel.TransactionViewModel
 import com.con19.tripplanner.viewmodel.TripViewModel
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import kotlinx.android.synthetic.main.fragment_trip_view.*
 
 const val TRIP_ID = "trip_id"
 
@@ -53,6 +55,8 @@ class TripViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val layout = inflater.inflate(R.layout.fragment_trip_view, container, false)
+        layout.findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout).title =
+            trip?.trip?.tripName ?: "Trip Not Found"
         initialiseRecyclerView(layout)
         return layout
     }
@@ -69,10 +73,11 @@ class TripViewFragment : Fragment() {
         }
 
         tripId?.let { tripId ->
-            transactionViewModel.getTransactionsForTrip(tripId).observe(viewLifecycleOwner, Observer { transactions ->
-                // Update the cached copy of the words in the adapter.
-                transactions?.let { transactionAdapter.transactionList = it }
-            })
+            transactionViewModel.getTransactionsForTrip(tripId)
+                .observe(viewLifecycleOwner, Observer { transactions ->
+                    // Update the cached copy of the words in the adapter.
+                    transactions?.let { transactionAdapter.transactionList = it }
+                })
         }
     }
 

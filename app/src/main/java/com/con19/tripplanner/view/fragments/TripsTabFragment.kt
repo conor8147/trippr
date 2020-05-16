@@ -29,4 +29,12 @@ class TripsTabFragment: Fragment() {
         transaction.replace(R.id.frame, TripsHomeFragment())
         transaction.commit()
     }
+
+    fun openViewPersonTab(tripId: Long) {
+        val newFrag = TripViewFragment.newInstance(tripId)
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame, newFrag)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
 }

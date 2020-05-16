@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.con19.tripplanner.R
 import com.con19.tripplanner.db.entities.TransactionWithPeople
 import kotlinx.android.synthetic.main.view_people_card.view.*
 
@@ -29,14 +30,13 @@ class TransactionsAdapter internal constructor(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
-        TODO("Not yet implemented")
+        val tripCard = inflater.inflate(R.layout.view_trip_card, parent, false)
+        return TransactionViewHolder(tripCard)
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun getItemCount(): Int = transactionList.size
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        // TODO("Not yet implemented")
     }
 }

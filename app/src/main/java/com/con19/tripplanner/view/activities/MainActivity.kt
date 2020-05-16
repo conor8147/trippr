@@ -9,6 +9,7 @@ import com.con19.tripplanner.R
 import com.con19.tripplanner.model.PersonService
 import com.con19.tripplanner.view.adapters.HomePagerAdapter
 import com.con19.tripplanner.view.adapters.PeopleAdapter
+import com.con19.tripplanner.view.adapters.TripsListAdapter
 import com.con19.tripplanner.view.fragments.PeopleTabFragment
 import com.con19.tripplanner.view.fragments.SettingsTabFragment
 import com.con19.tripplanner.view.fragments.TripsTabFragment
@@ -22,11 +23,15 @@ import com.google.android.material.tabs.TabLayoutMediator
  * Entry point to the app.
  * Contains View Pager that swipes between trips, people and settings
  */
-class MainActivity : AppCompatActivity(), PeopleAdapter.OnPersonClickedListener  {
+class MainActivity :
+    AppCompatActivity(),
+    PeopleAdapter.OnPersonClickedListener,
+    TripsListAdapter.OnTripClickedListener
+{
 
     private lateinit var viewPager: ViewPager2
 
-    private val tripsTabFragment  = TripsTabFragment()
+    private val tripsTabFragment = TripsTabFragment()
     private val peopleTabFragment = PeopleTabFragment()
     private val currentSettingsTabFragment = SettingsTabFragment()
 
@@ -116,5 +121,9 @@ class MainActivity : AppCompatActivity(), PeopleAdapter.OnPersonClickedListener 
 
     override fun onPersonClicked(personId: Long) {
         peopleTabFragment.openEditPersonTab(personId)
+    }
+
+    override fun onTripClicked(tripId: Long) {
+        tripsTabFragment.openViewPersonTab(tripId)
     }
 }
