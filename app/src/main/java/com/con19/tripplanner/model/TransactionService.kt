@@ -2,15 +2,32 @@ package com.con19.tripplanner.model
 
 import com.con19.tripplanner.db.dao.TransactionDao
 import com.con19.tripplanner.db.entities.Transaction
+import com.con19.tripplanner.db.entities.TransactionPersonCrossRef
 
 /**
  * Central repository for getting Person data from the database.
  */
 class TransactionService(private val transactionDao: TransactionDao) {
 
-    fun getTransactionById(transactionId: Int) = transactionDao.getTransactionById(transactionId)
-
     suspend fun insert(transaction: Transaction) = transactionDao.insert(transaction)
+
+    suspend fun addPersonToTransaction(transactionId: Long, personId: Long) {
+        transactionDao.insert(
+            TransactionPersonCrossRef(
+                transactionId,
+                personId
+            )
+        )
+    }
+
+    suspend fun removePersonFromTransaction(transactionId: Long, personId: Long) {
+        transactionDao.delete(
+            TransactionPersonCrossRef(
+                transactionId,
+                personId
+            )
+        )
+    }
 
     companion object {
         private var INSTANCE: TransactionService? = null

@@ -15,12 +15,14 @@ interface TripDao {
     fun getAll(): LiveData<List<TripWithPeople>>
 
     /**
-     * Returns id of inserted item
+     * Inserts a row into the cross reference table only. Use to link a trip with a person
      */
-    @Transaction
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(tripPersonCrossRef: TripPersonCrossRef): Long
 
+    /**
+     * Returns id of inserted item
+     */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(trip: Trip): Long
 
@@ -33,6 +35,9 @@ interface TripDao {
     @Delete
     suspend fun delete(trip: Trip): Int
 
+    /**
+     * Removes row from reference table only, use to decouple trip and person
+     */
     @Delete
     suspend fun delete(tripPersonCrossRef: TripPersonCrossRef)
 

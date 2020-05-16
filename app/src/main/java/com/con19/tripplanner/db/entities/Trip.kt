@@ -18,13 +18,8 @@ data class TripWithPeople(
     @Embedded val trip: Trip,
     @Relation(
         parentColumn = "tripId",
-        entity = Person::class,
         entityColumn = "personId",
-        associateBy = Junction(
-            value = TripPersonCrossRef::class,
-            parentColumn = "tripId",
-            entityColumn = "personId"
-            )
+        associateBy = Junction(TripPersonCrossRef::class)
     )
     val people: List<Person>
 )
