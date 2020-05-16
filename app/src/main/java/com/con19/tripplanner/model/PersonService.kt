@@ -11,10 +11,6 @@ class PersonService(private val personDao: PersonDao) {
 
     val allPeople: LiveData<List<Person>> = personDao.getAll()
 
-    fun getPersonById(id: Long): Person? = allPeople.value?.find {
-        id == it.id
-    }
-
     suspend fun insert(person: Person) = personDao.insert(person)
 
     companion object {

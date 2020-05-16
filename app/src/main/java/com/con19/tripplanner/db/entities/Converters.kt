@@ -25,11 +25,6 @@ class Converters {
     }
 
     @TypeConverter
-    fun personToLong(person: Person): Long {
-        return person.id
-    }
-
-    @TypeConverter
     fun stringToIdList(ids: String): List<Long> {
         if (ids == "") {
             return listOf()

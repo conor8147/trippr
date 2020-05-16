@@ -54,7 +54,9 @@ abstract class AppDatabase : RoomDatabase() {
                 Person("Charlotte", "0273785420"),
                 Person("James", "24532"),
                 Person("Ted", "4323432"),
-                Person("Sam", "4323432")
+                Person("Sam", "4323432"),
+                Person("Kevin", "432343232"),
+                Person("Bobby", "4323435335")
             )
 
             testPeople.forEach {
