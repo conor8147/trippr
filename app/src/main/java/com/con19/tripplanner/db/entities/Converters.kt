@@ -1,6 +1,8 @@
 package com.con19.tripplanner.db.entities
 
 import androidx.room.TypeConverter
+import com.con19.tripplanner.db.dao.PersonDao
+import com.con19.tripplanner.db.dao.TripDao
 import java.util.*
 
 /**
@@ -23,10 +25,15 @@ class Converters {
     }
 
     @TypeConverter
+    fun personToLong(person: Person): Long {
+        return person.id
+    }
+
+    @TypeConverter
     fun stringToIdList(ids: String): List<Long> {
         if (ids == "") {
             return listOf()
         }
-        return ids.split(", ").map { it.toLong() }
+        return ids.split(",").map { it.toLong() }
     }
 }

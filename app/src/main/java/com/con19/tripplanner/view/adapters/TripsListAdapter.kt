@@ -48,7 +48,7 @@ class TripsListAdapter internal constructor(
         holder.tripDates.text = currentTrip.startDate.toString() + " - " + currentTrip.endDate
         // holder.tripPhoto.setImageResource(currentTrip.coverPhoto)
         currentTrip.memberIds.forEach {
-            val name = personService.getPersonById(it).nickname
+            val name = personService.getPersonById(it)?.nickname ?: "Not Found"
             val chip = Chip(context)
             chip.text = name
             holder.tripPeople.addView(chip)
