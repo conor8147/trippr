@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
 import com.con19.tripplanner.db.entities.Person
 import com.con19.tripplanner.view.activities.MainActivity
-import kotlinx.android.synthetic.main.view_people_card.view.*
+import kotlinx.android.synthetic.main.view_basic_card.view.*
 
 class PeopleAdapter internal constructor(
     context: Context
@@ -34,11 +34,11 @@ class PeopleAdapter internal constructor(
 
 
     class PersonViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val name: TextView = view.nameTextView
+        val name: TextView = view.textView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonViewHolder {
-        val peopleCard = inflater.inflate(R.layout.view_people_card, parent, false)
+        val peopleCard = inflater.inflate(R.layout.view_basic_card, parent, false)
         return PersonViewHolder(peopleCard)
     }
 

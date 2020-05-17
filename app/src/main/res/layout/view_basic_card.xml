@@ -9,7 +9,7 @@
     android:layout_height="60dp">
 
     <TextView
-        android:id="@+id/nameTextView"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -26,8 +26,8 @@
         android:layout_width="14dp"
         android:layout_height="16dp"
         android:layout_marginEnd="28dp"
-        app:layout_constraintBottom_toBottomOf="@+id/nameTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nameTextView"
+        app:layout_constraintTop_toTopOf="@+id/textView"
         app:srcCompat="@drawable/ic_arrow_right" />
 </androidx.constraintlayout.widget.ConstraintLayout>

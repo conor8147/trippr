@@ -39,6 +39,8 @@ abstract class AppDatabase : RoomDatabase() {
     ) : RoomDatabase.Callback() {
 
         private val personIds = mutableListOf<Long>()
+        private val tripIds = mutableListOf<Long>()
+        private val transactionIds = mutableListOf<Long>()
 
         override fun onOpen(db: SupportSQLiteDatabase) {
             super.onOpen(db)
@@ -46,6 +48,7 @@ abstract class AppDatabase : RoomDatabase() {
                 scope.launch {
                     populatePeopleDatabase(database.personDao())
                     populateTripDatabase(database.tripDao())
+                    populateTransactionsDatabase(database.transactionDao())
                 }
             }
         }
@@ -75,10 +78,49 @@ abstract class AppDatabase : RoomDatabase() {
             // Delete all content here.
             tripDao.deleteAll()
 
-            val tripId = tripDao.insert(Trip("Ski Trip", Date(), Date(), null))
+            val testTrips = listOf(
+                Trip("Ski Trip", Date(), Date(), null),
+                Trip("Friday Drinks", Date(), Date(), null),
+                Trip("Weekend Climb", Date(), Date(), null),
+                Trip("Hanmer Springs", Date(), Date(), null),
+                Trip("West Coast", Date(), Date(), null)
 
-            personIds.forEach {
-                tripDao.insert(TripPersonCrossRef(tripId, it))
+            )
+
+            testTrips.forEach {
+                tripIds.add(tripDao.insert(it))
+            }
+
+            personIds.forEach {personId ->
+                tripIds.forEach {tripId ->
+                    tripDao.insert(TripPersonCrossRef(tripId, personId))
+                }
+            }
+        }
+
+        suspend fun populateTransactionsDatabase(transactionDao: TransactionDao) {
+            val testTransactions = listOf(
+                Transaction("Dinner", Date(), tripIds[0], false, 33.59F, null),
+                Transaction("Ski hire", Date(), tripIds[0], true, 33.59F, null),
+                Transaction("False", Date(), tripIds[0], false, 33.59F, null),
+                Transaction("Booze", Date(), tripIds[0], false, 33.59F, null),
+                Transaction("Girls", Date(), tripIds[0], false, 33.59F, null),
+                Transaction("The Devil's Lettuce", Date(), tripIds[0], true, 420F, null),
+                Transaction("Dinner", Date(), tripIds[0], false, 33.59F, null),
+                Transaction("True", Date(), tripIds[0], true, 33.59F, null),
+                Transaction("Dinner", Date(), tripIds[0], true, 33.59F, null),
+                Transaction("Dinner", Date(), tripIds[0], false, 33.59F, null),
+                Transaction("Dinner", Date(), tripIds[0], false, 33.59F, null)
+            )
+
+            testTransactions.forEach {
+                transactionIds.add(transactionDao.insert(it))
+            }
+
+            transactionIds.forEach { transactionId ->
+                personIds.forEach { personId ->
+                    transactionDao.insert(TransactionPersonCrossRef(transactionId, personId))
+                }
             }
         }
     }
