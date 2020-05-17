@@ -11,8 +11,8 @@ class Transaction(
     var creationDate: Date,
     var tripId: Long,
     var paid: Boolean,
-    var cost: Int,
-    var image: String
+    var cost: Float,
+    var image: String?
 ) {
     @PrimaryKey(autoGenerate = true)
     var transactionId: Long = 0
