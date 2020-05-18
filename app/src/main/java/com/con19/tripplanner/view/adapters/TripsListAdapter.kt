@@ -9,11 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
 import com.con19.tripplanner.db.entities.TripWithPeople
-import com.con19.tripplanner.model.PersonService
 import com.con19.tripplanner.view.activities.MainActivity
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import kotlinx.android.synthetic.main.view_trip_card.view.*
+import java.text.SimpleDateFormat
+
 
 class TripsListAdapter internal constructor(
     private val context: Context
@@ -53,8 +54,13 @@ class TripsListAdapter internal constructor(
     override fun onBindViewHolder(holder: TripViewHolder, position: Int) {
         val currentTripWithMembers = tripList[position]
         holder.tripTitle.text = currentTripWithMembers.trip.tripName
+
+        val sdf = SimpleDateFormat("dd MMM")
+        val startDate: String = sdf.format(currentTripWithMembers.trip.startDate)
+        val endDate: String = sdf.format(currentTripWithMembers.trip.endDate)
+
         holder.tripDates.text =
-            "${currentTripWithMembers.trip.startDate} - ${currentTripWithMembers.trip.endDate}"
+            "${startDate} - ${endDate}"
         holder.tripPeople.removeAllViews()
         // holder.tripPhoto.setImageResource(currentTrip.coverPhoto)
         currentTripWithMembers.people.forEach {
