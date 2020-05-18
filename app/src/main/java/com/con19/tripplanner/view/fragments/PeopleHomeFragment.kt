@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
@@ -48,7 +47,6 @@ class PeopleHomeFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = peopleAdapter
-            setDividers()
         }
 
         personViewModel.allPeople.observe(viewLifecycleOwner, Observer { people ->
@@ -58,22 +56,4 @@ class PeopleHomeFragment : Fragment() {
     }
 
 
-    /**
-     * Set Decorations for recyclerView
-     */
-    private fun RecyclerView.setDividers() {
-        val attrs = intArrayOf(android.R.attr.listDivider)
-        val a: TypedArray = context.obtainStyledAttributes(attrs)
-        val divider = a.getDrawable(0)
-        val inset = 32 // dp
-        val insetDivider = InsetDrawable(divider, inset, 0, inset, 0)
-        a.recycle()
-
-        val dividerItemDecoration = DividerItemDecoration(
-            this.context,
-            viewManager.orientation
-        )
-        dividerItemDecoration.setDrawable(insetDivider)
-        this.addItemDecoration(dividerItemDecoration)
-    }
 }
