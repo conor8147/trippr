@@ -22,6 +22,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
 
     fun getTransactionsForTrip(tripId: Long) = service.getTransactionsForTripWithId(tripId)
 
+
     /**
      * Launches a new coroutine to insert the data in a non-blocking way
      * viewModelScope is automatically cancelled when the ViewModel is cleared.

@@ -91,7 +91,7 @@ abstract class AppDatabase : RoomDatabase() {
                 tripIds.add(tripDao.insert(it))
             }
 
-            personIds.forEach {personId ->
+            personIds.subList(0,3).forEach {personId ->
                 tripIds.forEach {tripId ->
                     tripDao.insert(TripPersonCrossRef(tripId, personId))
                 }

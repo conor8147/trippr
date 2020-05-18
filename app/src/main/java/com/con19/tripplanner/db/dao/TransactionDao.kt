@@ -14,6 +14,7 @@ interface TransactionDao {
     @Query ("SELECT * FROM transactions")
     fun getAll(): LiveData<List<TransactionWithPeople>>
 
+    @androidx.room.Transaction
     @Query("SELECT * FROM transactions WHERE tripId = :tripId")
     fun getTransactionsForTripWithId(tripId: Long): LiveData<List<TransactionWithPeople>>
 

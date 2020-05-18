@@ -2,11 +2,9 @@ package com.con19.tripplanner.view.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.con19.tripplanner.R
-import com.con19.tripplanner.model.PersonService
 import com.con19.tripplanner.view.adapters.HomePagerAdapter
 import com.con19.tripplanner.view.adapters.PeopleAdapter
 import com.con19.tripplanner.view.adapters.TripsListAdapter
@@ -124,6 +122,6 @@ class MainActivity :
     }
 
     override fun onTripClicked(tripId: Long) {
-        tripsTabFragment.openViewPersonTab(tripId)
+        tripsTabFragment.openTripViewFragment(tripId)
     }
 }

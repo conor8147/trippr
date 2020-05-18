@@ -76,7 +76,7 @@ class TripViewFragment : Fragment() {
             transactionViewModel.getTransactionsForTrip(tripId)
                 .observe(viewLifecycleOwner, Observer { transactions ->
                     // Update the cached copy of the words in the adapter.
-                    transactions?.let { transactionAdapter.transactionList = it }
+                    transactions?.let { transactionAdapter.allTransactions = it }
                 })
         }
     }
