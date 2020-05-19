@@ -100,17 +100,17 @@ abstract class AppDatabase : RoomDatabase() {
 
         suspend fun populateTransactionsDatabase(transactionDao: TransactionDao) {
             val testTransactions = listOf(
-                Transaction("Dinner", Date(), tripIds[0], false, 33.59F, null),
+                Transaction("Dinner @ Moes", Date(), tripIds[0], false, 33.59F, null),
                 Transaction("Ski hire", Date(), tripIds[0], true, 33.59F, null),
-                Transaction("False", Date(), tripIds[0], false, 33.59F, null),
+                Transaction("Lunch @ Coronet", Date(), tripIds[0], false, 33.59F, null),
                 Transaction("Booze", Date(), tripIds[0], false, 33.59F, null),
                 Transaction("Girls", Date(), tripIds[0], false, 33.59F, null),
                 Transaction("The Devil's Lettuce", Date(), tripIds[0], true, 420F, null),
-                Transaction("Dinner", Date(), tripIds[0], false, 33.59F, null),
-                Transaction("True", Date(), tripIds[0], true, 33.59F, null),
-                Transaction("Dinner", Date(), tripIds[0], true, 33.59F, null),
-                Transaction("Dinner", Date(), tripIds[0], false, 33.59F, null),
-                Transaction("Dinner", Date(), tripIds[0], false, 33.59F, null)
+                Transaction("Dinner @ Burger Burger", Date(), tripIds[0], false, 33.59F, null),
+                Transaction("Mondays Groceries", Date(), tripIds[0], true, 33.59F, null),
+                Transaction("Bubble Tea", Date(), tripIds[0], true, 33.59F, null),
+                Transaction("Fish and Chips", Date(), tripIds[0], false, 33.59F, null),
+                Transaction("Breakfast @ Heritage", Date(), tripIds[0], false, 33.59F, null)
             )
 
             testTransactions.forEach {

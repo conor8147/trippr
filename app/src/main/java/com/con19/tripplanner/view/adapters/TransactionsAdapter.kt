@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.view_basic_card.view.*
 
 class TransactionsAdapter internal constructor(
     val context: Context
-) : RecyclerView.Adapter<TransactionsAdapter.TransactionViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var paidTransactions = emptyList<TransactionWithPeople>()
@@ -33,40 +33,49 @@ class TransactionsAdapter internal constructor(
         val textView: TextView = view.textView
     }
 
+    class HeaderViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        //val textView = view.includedLayout.textView
+    }
+
     override fun getItemViewType(position: Int): Int = when {
-        position == 0 -> TITLE_CARD_VIEW
-        position == paidTransactions.size + 1 -> TITLE_CARD_VIEW
-        position <= paidTransactions.size -> BASIC_CARD_VIEW
+        position == getHeaderPosition() -> HEADER_VIEW
+        position == getUnpaidTitlePosition() -> TITLE_CARD_VIEW
+        position == getPaidTitlePosition() -> TITLE_CARD_VIEW
         else -> BASIC_CARD_VIEW
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
-        val view = when (viewType) {
-            TITLE_CARD_VIEW -> R.layout.view_title_card
-            else -> R.layout.view_basic_card
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            HEADER_VIEW -> HeaderViewHolder(inflater.inflate(R.layout.view_trip_view_info, parent, false))
+            TITLE_CARD_VIEW -> TransactionViewHolder(inflater.inflate(R.layout.view_title_card, parent, false))
+            else -> TransactionViewHolder(inflater.inflate(R.layout.view_basic_card, parent, false))
         }
-        val card = inflater.inflate(view, parent, false)
-        return TransactionViewHolder(card)
     }
 
     // Enough for all transactions, plus two title cards
-    override fun getItemCount(): Int = paidTransactions.size + unPaidTransactions.size + 2
+    override fun getItemCount(): Int = paidTransactions.size + unPaidTransactions.size + 2 + 1
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
-        holder.textView.text = when {
-            position == 0 -> {
-                context.getString(R.string.paid) + ": "
-            }
-            position == paidTransactions.size + 1-> {
-                context.getString(R.string.unpaid) + ": "
-            }
-            position <= paidTransactions.size -> {
-                paidTransactions[position - 1].transaction.name
-            }
-            else -> {
-                unPaidTransactions[position - paidTransactions.size - 2].transaction.name
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is HeaderViewHolder) {
+            // set all text
+        } else if (holder is TransactionViewHolder) {
+            holder.textView.text = when {
+                position == getUnpaidTitlePosition() -> {
+                    context.getString(R.string.unpaid) + ": "
+                }
+                position == getPaidTitlePosition() -> {
+                    context.getString(R.string.paid) + ": "
+                }
+                position <= getPaidTitlePosition() -> {
+                    unPaidTransactions[position - (getUnpaidTitlePosition() + 1) ].transaction.name
+                }
+                else -> {
+                    holder.textView.alpha = 0.3F
+                    holder.view.imageView.alpha = 0.3F
+                    paidTransactions[position - (getPaidTitlePosition() + 1) ].transaction.name
+                }
             }
         }
     }
@@ -81,8 +90,15 @@ class TransactionsAdapter internal constructor(
         }
     }
 
+    private fun getHeaderPosition(): Int = 0
+
+    private fun getUnpaidTitlePosition(): Int = 1
+
+    private fun getPaidTitlePosition(): Int = unPaidTransactions.size + 2
+
     companion object {
-        const val TITLE_CARD_VIEW = 0
-        const val BASIC_CARD_VIEW = 1
+        const val HEADER_VIEW = 0
+        const val TITLE_CARD_VIEW = 1
+        const val BASIC_CARD_VIEW = 2
     }
 }
