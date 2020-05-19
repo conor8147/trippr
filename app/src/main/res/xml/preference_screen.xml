@@ -3,8 +3,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
+        android:layout_width="match_parent"
         android:title="Display">
         <SwitchPreference
+            android:icon="@drawable/ic_color"
             android:defaultValue="false"
             android:key="switch_preference_1"
             android:title="Dark Mode" />
@@ -12,22 +14,30 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:title="Notifications">
         <SwitchPreference
-            android:defaultValue="false"
+            android:icon="@drawable/ic_notif"
+            android:defaultValue="true"
+            android:summary="Receive notifications when a trip is ending"
             android:key="switch_preference_1"
             android:title="Trip end alert" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="Bank Details">
+    <PreferenceCategory android:title="Bank Details">
         <EditTextPreference
-            android:defaultValue="Default value"
+            android:id="@+id/account"
+            android:icon="@drawable/ic_money"
+            android:defaultValue="Account Number"
+            android:inputType="number"
             android:key="edit_text_preference_1"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Account payable" />
+            android:title="Account payable"
+            android:summary="Set the default account to be paid into"
+            android:dialogTitle="Set your account number"/>
 
     </PreferenceCategory>
 </PreferenceScreen>

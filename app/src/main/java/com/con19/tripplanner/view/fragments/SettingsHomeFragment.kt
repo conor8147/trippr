@@ -27,6 +27,7 @@ class SettingsHomeFragment : Fragment() {
     }
 }
 
+
 class PreferencesFragment: PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preference_screen)
