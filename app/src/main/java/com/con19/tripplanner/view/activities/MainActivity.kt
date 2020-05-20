@@ -10,6 +10,7 @@ import com.con19.tripplanner.view.adapters.PeopleAdapter
 import com.con19.tripplanner.view.adapters.TripsListAdapter
 import com.con19.tripplanner.view.fragments.PeopleTabFragment
 import com.con19.tripplanner.view.fragments.SettingsTabFragment
+import com.con19.tripplanner.view.fragments.TripViewFragment
 import com.con19.tripplanner.view.fragments.TripsTabFragment
 import com.con19.tripplanner.viewmodel.PersonViewModel
 import com.con19.tripplanner.viewmodel.TransactionViewModel
@@ -24,7 +25,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 class MainActivity :
     AppCompatActivity(),
     PeopleAdapter.OnPersonClickedListener,
-    TripsListAdapter.OnTripClickedListener
+    TripsListAdapter.TripsListListener,
+    TripViewFragment.TripViewListener
 {
 
     private lateinit var viewPager: ViewPager2
@@ -66,7 +68,12 @@ class MainActivity :
         tabLayout.apply {
             tabIconTint = null
             addOnTabSelectedListener(object : OnTabSelectedListener {
-                override fun onTabReselected(tab: TabLayout.Tab?) {}
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                    when (tab?.position) {
+                        HomePagerAdapter.TRIPS_POSITION ->  tripsTabFragment.openTripHomeFragment()
+                        HomePagerAdapter.PEOPLE_POSITION -> peopleTabFragment.openPeopleHomeFragment()
+                    }
+                }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
                     tab?.tabLabelVisibility = TabLayout.TAB_LABEL_VISIBILITY_UNLABELED
@@ -123,5 +130,9 @@ class MainActivity :
 
     override fun onTripClicked(tripId: Long) {
         tripsTabFragment.openTripViewFragment(tripId)
+    }
+
+    override fun onBackSelected() {
+        tripsTabFragment.openTripHomeFragment()
     }
 }

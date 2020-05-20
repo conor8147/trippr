@@ -37,4 +37,12 @@ class TripsTabFragment: Fragment() {
         transaction.addToBackStack(null)
         transaction.commit()
     }
+
+    fun openTripHomeFragment() {
+        val newFrag = TripsHomeFragment()
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame, newFrag)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
 }

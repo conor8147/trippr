@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
-import com.con19.tripplanner.view.activities.MainActivity
 import com.con19.tripplanner.view.adapters.TripsListAdapter
 import com.con19.tripplanner.viewmodel.TripViewModel
 
@@ -53,6 +52,4 @@ class TripsHomeFragment : Fragment() {
             // Update the cached copy of the words in the adapter.
             trips?.let { tripsListAdapter.tripList = it }
         })    }
-
-
 }

@@ -21,7 +21,7 @@ class TripsListAdapter internal constructor(
 ) : RecyclerView.Adapter<TripsListAdapter.TripViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private lateinit var listener: OnTripClickedListener
+    private var listener: TripsListListener
 
     var tripList = emptyList<TripWithPeople>()
         set(trip) {
@@ -72,11 +72,11 @@ class TripsListAdapter internal constructor(
 
         // enable click on link to go the the trip view for that trip
         holder.view.setOnClickListener {
-            listener?.onTripClicked(currentTripWithMembers.trip.tripId)
+            listener.onTripClicked(currentTripWithMembers.trip.tripId)
         }
     }
 
-    interface OnTripClickedListener {
+    interface TripsListListener {
         fun onTripClicked(tripId: Long)
     }
 }

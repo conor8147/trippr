@@ -37,4 +37,12 @@ class PeopleTabFragment : Fragment() {
         transaction.addToBackStack(null)
         transaction.commit()
     }
+
+    fun openPeopleHomeFragment() {
+        val newFrag = PeopleHomeFragment()
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame, newFrag)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
 }
