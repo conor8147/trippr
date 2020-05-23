@@ -2,12 +2,15 @@ package com.con19.tripplanner.view.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
 import com.con19.tripplanner.db.entities.TransactionWithPeople
@@ -113,6 +116,13 @@ class TransactionsAdapter internal constructor(
 
         holder.addReceiptButton.setOnClickListener {
             listener?.onAddReceiptButtonClicked(tripWithPeople.trip.tripId)
+        }
+
+        holder.splitCostsButton.setOnClickListener {
+            val sendIntent = Intent(Intent.ACTION_VIEW)
+            sendIntent.data = Uri.parse("sms:")
+            sendIntent.putExtra("sms_body", "Howdy doooo")
+            startActivity(context, sendIntent, null);
         }
     }
 
