@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Trip Planner</string>
+    <string name="settings">Réglages</string>
+    <string name="people">Gens</string>
+    <string name="trips">Voyages</string>
+    <string name="placeholderTrip">Voyage au ski</string>
+    <string name="placeholderTripDates">21 Fév - 2 Mars</string>
+    <string name="placeholderPersonName">Conor</string>
+    <string name="content_description_media">" Image du voyage"</string>
+    <string name="name">Nom</string>
+    <string name="number">Nombre</string>
+    <string name="hello_blank_fragment">Bonjour fragment vierge</string>
+    <string name="paid">Payé</string>
+    <string name="unpaid">Non payé</string>
+    <string name="name_placeholder">Nom Espace réservé</string>
+    <string name="default_string">défaut</string>
+    <string name="add_receipt_button">" Ajouter un reçu"</string>
+    <string name="split_costs_button">" Coûts partagés"</string>
+    <string name="preferences">Préférences</string>
+</resources>

@@ -33,7 +33,7 @@
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/colorAccent"
                 android:drawableLeft="@drawable/split"
-                android:text="Split costs"
+                android:text="@string/split_costs_button"
                 app:cornerRadius="25dp"
                 app:layout_constraintStart_toStartOf="parent" />
         </RelativeLayout>
@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/colorAccent"
                 android:drawableLeft="@drawable/ic_add_black_24dp"
-                android:text="Add receipt"
+                android:text="@string/add_receipt_button"
                 app:cornerRadius="25dp"
 
                 app:layout_constraintEnd_toEndOf="parent" />

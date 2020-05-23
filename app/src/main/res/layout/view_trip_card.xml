@@ -79,7 +79,6 @@
                             android:text="@string/placeholderPersonName"
                             android:textStyle="bold" />
 
-                        <!-- TODO Change the text style to OVERLINE programatically -->
 
                     </com.google.android.material.chip.ChipGroup>
 

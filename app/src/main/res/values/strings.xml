@@ -17,4 +17,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="paid">Paid</string>
     <string name="unpaid">Unpaid</string>
+    <string name="name_placeholder">Name Placeholder</string>
+    <string name="default_string">default</string>
+    <string name="split_costs_button">Split costs</string>
+    <string name="add_receipt_button">Add receipt</string>
+    <string name="preferences">Preferences</string>
 </resources>
