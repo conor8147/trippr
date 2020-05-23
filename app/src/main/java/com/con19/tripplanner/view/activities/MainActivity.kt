@@ -25,7 +25,6 @@ class MainActivity :
     PeopleAdapter.OnPersonClickedListener,
     TripsListAdapter.TripsListListener,
     TripViewFragment.TripViewListener,
-    TransactionsAdapter.TransactionsAdapterListener,
     AddReceiptFragment.AddReceiptFragmentListener
 {
 

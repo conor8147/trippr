@@ -2,15 +2,13 @@ package com.con19.tripplanner.view.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
 import com.con19.tripplanner.db.entities.TransactionWithPeople
@@ -21,17 +19,17 @@ import kotlinx.android.synthetic.main.view_basic_card.view.*
 import kotlinx.android.synthetic.main.view_trip_card.view.*
 import kotlinx.android.synthetic.main.view_trip_view_info.view.*
 import java.text.SimpleDateFormat
-import java.util.*
 
 class TransactionsAdapter internal constructor(
     val context: Context,
-    val tripWithPeople: TripWithPeople
+    parent: Fragment,
+    private val tripWithPeople: TripWithPeople
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var paidTransactions = emptyList<TransactionWithPeople>()
     private var unPaidTransactions = emptyList<TransactionWithPeople>()
-    private var listener: TransactionsAdapterListener? = null
+    private var listener: TransactionsAdapterListener
     var allTransactions = emptyList<TransactionWithPeople>()
         set(transactions) {
             field = transactions
@@ -41,10 +39,10 @@ class TransactionsAdapter internal constructor(
 
     init {
         updateTransactions()
-        if (context is TransactionsAdapterListener) {
-            this.listener = context
+        if (parent is TransactionsAdapterListener) {
+            this.listener = parent
         } else {
-            throw RuntimeException("$context must implement TransactionsAdapterListener")
+            throw RuntimeException("$parent must implement TransactionsAdapterListener")
         }
     }
 
@@ -115,14 +113,11 @@ class TransactionsAdapter internal constructor(
         }
 
         holder.addReceiptButton.setOnClickListener {
-            listener?.onAddReceiptButtonClicked(tripWithPeople.trip.tripId)
+            listener.onAddReceiptButtonClicked()
         }
 
         holder.splitCostsButton.setOnClickListener {
-            val sendIntent = Intent(Intent.ACTION_VIEW)
-            sendIntent.data = Uri.parse("sms:")
-            sendIntent.putExtra("sms_body", "Howdy doooo")
-            startActivity(context, sendIntent, null);
+            listener.onSplitCostsClicked()
         }
     }
 
@@ -165,7 +160,8 @@ class TransactionsAdapter internal constructor(
     private fun getPaidTitlePosition(): Int = unPaidTransactions.size + 2
 
     interface TransactionsAdapterListener {
-        fun onAddReceiptButtonClicked(tripId: Long)
+        fun onAddReceiptButtonClicked()
+        fun onSplitCostsClicked()
     }
 
     companion object {

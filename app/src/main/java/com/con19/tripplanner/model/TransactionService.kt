@@ -15,6 +15,9 @@ class TransactionService(private val transactionDao: TransactionDao) {
     fun getTransactionsForTripWithId(tripId: Long): LiveData<List<TransactionWithPeople>> =
         transactionDao.getTransactionsForTripWithId(tripId)
 
+    suspend fun getOneOffTransactionsForTripWithId(tripId: Long): List<TransactionWithPeople> =
+        transactionDao.getOneOffTransactionsForTripWithId(tripId)
+
     suspend fun insert(transaction: Transaction, people: List<Person>): Long {
         val transactionId = transactionDao.insert(transaction)
         people.forEach {
@@ -46,7 +49,7 @@ class TransactionService(private val transactionDao: TransactionDao) {
         )
     }
 
-    fun changeTransactionPaidStatus(transactionId: Long, newPaidStatus: Boolean) {
+    suspend fun changeTransactionPaidStatus(transactionId: Long, newPaidStatus: Boolean) {
         transactionDao.updatePaidStatusForTransaction(transactionId, newPaidStatus)
     }
 

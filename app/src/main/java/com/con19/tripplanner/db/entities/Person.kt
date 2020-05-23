@@ -11,4 +11,8 @@ class Person(
 ) {
     @PrimaryKey(autoGenerate = true)
     var personId: Long = 0
+
+    override fun equals(other: Any?): Boolean {
+        return other != null && other is Person && other.personId == this.personId
+    }
 }

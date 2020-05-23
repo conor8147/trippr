@@ -16,10 +16,14 @@ interface TransactionDao {
 
     @androidx.room.Transaction
     @Query("SELECT * FROM transactions WHERE tripId = :tripId")
+    suspend fun getOneOffTransactionsForTripWithId(tripId: Long): List<TransactionWithPeople>
+
+    @androidx.room.Transaction
+    @Query("SELECT * FROM transactions WHERE tripId = :tripId")
     fun getTransactionsForTripWithId(tripId: Long): LiveData<List<TransactionWithPeople>>
 
     @Query("UPDATE transactions SET paid = :newPaidStatus WHERE transactionId = :transactionId")
-    fun updatePaidStatusForTransaction(transactionId: Long, newPaidStatus: Boolean)
+    suspend fun updatePaidStatusForTransaction(transactionId: Long, newPaidStatus: Boolean)
 
     @Insert
     suspend fun insert(transaction : Transaction): Long
