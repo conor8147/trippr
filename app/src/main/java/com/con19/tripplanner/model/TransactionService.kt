@@ -2,6 +2,7 @@ package com.con19.tripplanner.model
 
 import androidx.lifecycle.LiveData
 import com.con19.tripplanner.db.dao.TransactionDao
+import com.con19.tripplanner.db.entities.Person
 import com.con19.tripplanner.db.entities.Transaction
 import com.con19.tripplanner.db.entities.TransactionPersonCrossRef
 import com.con19.tripplanner.db.entities.TransactionWithPeople
@@ -14,7 +15,18 @@ class TransactionService(private val transactionDao: TransactionDao) {
     fun getTransactionsForTripWithId(tripId: Long): LiveData<List<TransactionWithPeople>> =
         transactionDao.getTransactionsForTripWithId(tripId)
 
-    suspend fun insert(transaction: Transaction) = transactionDao.insert(transaction)
+    suspend fun insert(transaction: Transaction, people: List<Person>): Long {
+        val transactionId = transactionDao.insert(transaction)
+        people.forEach {
+            transactionDao.insert(
+                TransactionPersonCrossRef(
+                    transactionId,
+                    it.personId
+                )
+            )
+        }
+        return transactionId
+    }
 
     suspend fun addPersonToTransaction(transactionId: Long, personId: Long) {
         transactionDao.insert(
