@@ -19,4 +19,5 @@
     <string name="unpaid">Unpaid</string>
     <string name="new_receipt">New Receipt</string>
     <string name="cost">Cost</string>
+    <string name="add_person">Add Person</string>
 </resources>

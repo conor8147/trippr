@@ -4,7 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.con19.tripplanner.db.AppDatabase
+import com.con19.tripplanner.db.entities.Person
 import com.con19.tripplanner.db.entities.Transaction
+import com.con19.tripplanner.db.entities.TransactionWithPeople
 import com.con19.tripplanner.model.TransactionService
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -28,8 +30,8 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
      * viewModelScope is automatically cancelled when the ViewModel is cleared.
      * @return a deferred reference to the id of the inserted. get actual id by using .await()
      */
-    fun insertAsync(transaction: Transaction): Deferred<Long> = viewModelScope.async(Dispatchers.IO) {
-        service.insert(transaction)
+    fun insertAsync(transaction: Transaction, people: List<Person>): Deferred<Long> = viewModelScope.async(Dispatchers.IO) {
+        service.insert(transaction, people)
     }
 
     fun addPersonToTransaction(transactionId: Long, personId: Long) = viewModelScope.launch(Dispatchers.IO) {

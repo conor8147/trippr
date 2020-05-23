@@ -9,10 +9,7 @@ import com.con19.tripplanner.view.adapters.HomePagerAdapter
 import com.con19.tripplanner.view.adapters.PeopleAdapter
 import com.con19.tripplanner.view.adapters.TransactionsAdapter
 import com.con19.tripplanner.view.adapters.TripsListAdapter
-import com.con19.tripplanner.view.fragments.PeopleTabFragment
-import com.con19.tripplanner.view.fragments.SettingsTabFragment
-import com.con19.tripplanner.view.fragments.TripViewFragment
-import com.con19.tripplanner.view.fragments.TripsTabFragment
+import com.con19.tripplanner.view.fragments.*
 import com.con19.tripplanner.viewmodel.PersonViewModel
 import com.con19.tripplanner.viewmodel.TransactionViewModel
 import com.google.android.material.tabs.TabLayout
@@ -28,7 +25,8 @@ class MainActivity :
     PeopleAdapter.OnPersonClickedListener,
     TripsListAdapter.TripsListListener,
     TripViewFragment.TripViewListener,
-    TransactionsAdapter.TransactionsAdapterListener
+    TransactionsAdapter.TransactionsAdapterListener,
+    AddReceiptFragment.AddReceiptFragmentListener
 {
 
     private lateinit var viewPager: ViewPager2
@@ -144,5 +142,9 @@ class MainActivity :
 
     override fun onAddReceiptButtonClicked(tripId: Long) {
         tripsTabFragment.openAddReceiptFragment(tripId)
+    }
+
+    override fun onReceiptFragmentBackButtonPressed(tripId: Long) {
+        tripsTabFragment.openTripViewFragment(tripId)
     }
 }
