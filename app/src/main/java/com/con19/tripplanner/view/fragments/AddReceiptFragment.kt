@@ -135,7 +135,7 @@ class AddReceiptFragment private constructor() : Fragment() {
         if (context is AddReceiptFragmentListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement AddReceiptFragmentListener")
+            throw RuntimeException("$context must implement AddReceiptFragmentListener")
         }
     }
 
