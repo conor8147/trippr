@@ -37,12 +37,10 @@ class EditPersonFragment : Fragment() {
 
         layout.findViewById<TextInputLayout>(R.id.nameTextInput).editText?.apply {
             setText(person?.nickname)
-
         }
 
         layout.findViewById<TextInputLayout>(R.id.numberTextInput).editText?.apply {
             setText(person?.phoneNumber)
-
         }
         return layout
     }

@@ -22,4 +22,6 @@
     <string name="split_costs_button">Split costs</string>
     <string name="add_receipt_button">Add receipt</string>
     <string name="preferences">Preferences</string>
+    <string name="new_receipt">New Receipt</string>
+    <string name="cost">Cost</string>
 </resources>

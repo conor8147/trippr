@@ -24,22 +24,24 @@ class TripsTabFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val transaction = childFragmentManager.beginTransaction()
-        // When this container fragment is created, we fill it with our first "real" fragment
-        transaction.replace(R.id.frame, TripsHomeFragment())
-        transaction.commit()
+        openTripHomeFragment()
     }
 
     fun openTripViewFragment(tripId: Long) {
         val newFrag = TripViewFragment.newInstance(tripId)
-        val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame, newFrag)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        replaceCurrentFragmentWith(newFrag)
     }
 
     fun openTripHomeFragment() {
-        val newFrag = TripsHomeFragment()
+        replaceCurrentFragmentWith(TripsHomeFragment())
+    }
+
+    fun openAddReceiptFragment(tripId: Long) {
+        val newFrag = AddReceiptFragment.newInstance(tripId)
+        replaceCurrentFragmentWith(newFrag)
+    }
+
+    private fun replaceCurrentFragmentWith(newFrag: Fragment) {
         val transaction = childFragmentManager.beginTransaction()
         transaction.replace(R.id.frame, newFrag)
         transaction.addToBackStack(null)
