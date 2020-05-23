@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
@@ -139,7 +140,7 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
     override fun onSplitCostsClicked() {
         Log.i("yeet", "yeet yeet")
         val df = DecimalFormat("#.##")
-        GlobalScope.launch {
+        lifecycleScope.launch {
             // running this inside an async launch thing as it may take quite some time to finish.
             val peopleCostsMap: List<Pair<Person, Float>>? =
                 tripId?.let { transactionViewModel.settleUpTrip(it) }
