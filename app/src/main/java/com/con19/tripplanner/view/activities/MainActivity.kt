@@ -7,6 +7,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.con19.tripplanner.R
 import com.con19.tripplanner.view.adapters.HomePagerAdapter
 import com.con19.tripplanner.view.adapters.PeopleAdapter
+import com.con19.tripplanner.view.adapters.TransactionsAdapter
 import com.con19.tripplanner.view.adapters.TripsListAdapter
 import com.con19.tripplanner.view.fragments.PeopleTabFragment
 import com.con19.tripplanner.view.fragments.SettingsTabFragment
@@ -26,7 +27,8 @@ class MainActivity :
     AppCompatActivity(),
     PeopleAdapter.OnPersonClickedListener,
     TripsListAdapter.TripsListListener,
-    TripViewFragment.TripViewListener
+    TripViewFragment.TripViewListener,
+    TransactionsAdapter.TransactionsAdapterListener
 {
 
     private lateinit var viewPager: ViewPager2
@@ -70,7 +72,7 @@ class MainActivity :
             addOnTabSelectedListener(object : OnTabSelectedListener {
                 override fun onTabReselected(tab: TabLayout.Tab?) {
                     when (tab?.position) {
-                        HomePagerAdapter.TRIPS_POSITION ->  tripsTabFragment.openTripHomeFragment()
+                        HomePagerAdapter.TRIPS_POSITION -> tripsTabFragment.openTripHomeFragment()
                         HomePagerAdapter.PEOPLE_POSITION -> peopleTabFragment.openPeopleHomeFragment()
                     }
                 }
@@ -134,5 +136,13 @@ class MainActivity :
 
     override fun onBackSelected() {
         tripsTabFragment.openTripHomeFragment()
+    }
+
+    override fun onErrorOpeningTripViewFragment() {
+        tripsTabFragment.openTripHomeFragment()
+    }
+
+    override fun onAddReceiptButtonClicked(tripId: Long) {
+        tripsTabFragment.openAddReceiptFragment(tripId)
     }
 }

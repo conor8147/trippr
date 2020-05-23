@@ -1,8 +1,8 @@
 package com.con19.tripplanner.view.fragments
 
 import android.content.Context
-import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +22,7 @@ import com.google.android.material.appbar.MaterialToolbar
 const val TRIP_ID = "trip_id"
 
 class TripViewFragment : Fragment() {
+     private val TAG = this::class.simpleName
 
     private var tripId: Long? = null
     private lateinit var viewManager: LinearLayoutManager
@@ -44,8 +45,8 @@ class TripViewFragment : Fragment() {
         trip = tripId?.let { tripViewModel.getTripById(it) }
 
         if (trip == null) {
-            throw Resources.NotFoundException()
-            // TODO: handle this gracefully
+            Log.e(TAG, "Error opening TripViewFragment, tripId was $tripId")
+            listener?.onErrorOpeningTripViewFragment()
         }
     }
 
@@ -68,7 +69,7 @@ class TripViewFragment : Fragment() {
     private fun initialiseRecyclerView(layout: View) {
         viewManager = LinearLayoutManager(requireContext())
         val recyclerView: RecyclerView = layout.findViewById(R.id.recyclerView)
-        val transactionAdapter = TransactionsAdapter(requireContext())
+        val transactionAdapter = trip?.let { TransactionsAdapter(requireContext(), it) }
 
         recyclerView.apply {
             setHasFixedSize(true)
@@ -80,7 +81,7 @@ class TripViewFragment : Fragment() {
             transactionViewModel.getTransactionsForTrip(tripId)
                 .observe(viewLifecycleOwner, Observer { transactions ->
                     // Update the cached copy of the words in the adapter.
-                    transactions?.let { transactionAdapter.allTransactions = it }
+                    transactions?.let { transactionAdapter?.allTransactions = it }
                 })
         }
     }
@@ -101,6 +102,7 @@ class TripViewFragment : Fragment() {
 
     interface TripViewListener {
         fun onBackSelected()
+        fun onErrorOpeningTripViewFragment()
     }
 
     companion object {

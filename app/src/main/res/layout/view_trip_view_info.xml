@@ -28,7 +28,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/splitCostsButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/colorAccent"
@@ -46,7 +46,7 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/addReceiptButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/colorAccent"
