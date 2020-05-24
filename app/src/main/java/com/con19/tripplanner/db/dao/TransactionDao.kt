@@ -29,7 +29,7 @@ interface TransactionDao {
     suspend fun insert(transaction : Transaction): Long
 
     /**
-     * Inserts a row into the cross reference table only. Use to link a transaction with a person
+     * Inserts hands_split row into the cross reference table only. Use to link hands_split transaction with hands_split person
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(transactionPersonCrossRef: TransactionPersonCrossRef): Long

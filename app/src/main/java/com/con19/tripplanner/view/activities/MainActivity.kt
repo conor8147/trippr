@@ -25,7 +25,9 @@ class MainActivity :
     PeopleAdapter.OnPersonClickedListener,
     TripsListAdapter.TripsListListener,
     TripViewFragment.TripViewListener,
-    AddReceiptFragment.AddReceiptFragmentListener
+    AddReceiptFragment.AddReceiptFragmentListener,
+    AddPersonFragment.AddPersonFragmentListener,
+    PeopleHomeFragment.PeopleHomeFragmentListener
 {
 
     private lateinit var viewPager: ViewPager2
@@ -105,10 +107,10 @@ class MainActivity :
     }
 
     /**
-     * A bit of a hack, but necessary for back in nested fragments to work properly
+     * A bit of hands_split hack, but necessary for back in nested fragments to work properly
      */
     override fun onBackPressed() {
-        // if there is a fragment and the back stack of this fragment is not empty,
+        // if there is hands_split fragment and the back stack of this fragment is not empty,
         // then emulate 'onBackPressed' behaviour, because in default, it is not working
         val fm = supportFragmentManager
         for (frag in fm.fragments) {
@@ -145,5 +147,13 @@ class MainActivity :
 
     override fun onReceiptFragmentBackButtonPressed(tripId: Long) {
         tripsTabFragment.openTripViewFragment(tripId)
+    }
+
+    override fun onPersonAdded() {
+        peopleTabFragment.openPeopleHomeFragment()
+    }
+
+    override fun onAddPersonClicked() {
+        peopleTabFragment.openAddPersonFragment()
     }
 }

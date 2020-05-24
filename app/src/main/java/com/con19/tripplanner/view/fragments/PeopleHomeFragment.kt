@@ -1,5 +1,6 @@
 package com.con19.tripplanner.view.fragments
 
+import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.drawable.InsetDrawable
 import android.os.Bundle
@@ -14,11 +15,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
 import com.con19.tripplanner.view.adapters.PeopleAdapter
 import com.con19.tripplanner.viewmodel.PersonViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.lang.RuntimeException
 
 /**
  * Fragment for the Settings Tab.
  */
 class PeopleHomeFragment : Fragment() {
+    private var listener: PeopleHomeFragmentListener? = null
 
     private lateinit var viewManager: LinearLayoutManager
     private lateinit var personViewModel: PersonViewModel
@@ -34,6 +38,9 @@ class PeopleHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val layout: View = inflater.inflate(R.layout.fragment_people_home, container, false)
+        layout.findViewById<FloatingActionButton>(R.id.floatingActionButton).setOnClickListener {
+            listener?.onAddPersonClicked();
+        }
         initialiseRecyclerView(layout)
         return layout
     }
@@ -55,5 +62,21 @@ class PeopleHomeFragment : Fragment() {
         })
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is PeopleHomeFragmentListener) {
+            this.listener = context
+        } else {
+            throw RuntimeException("$context must implement PeopleHomeFragmentListener")
+        }
+    }
 
+    override fun onDetach() {
+        super.onDetach()
+        this.listener = null
+    }
+
+    interface PeopleHomeFragmentListener {
+        fun onAddPersonClicked()
+    }
 }

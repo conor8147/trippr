@@ -24,22 +24,22 @@ class PeopleTabFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val transaction = childFragmentManager.beginTransaction()
-        // When this container fragment is created, we fill it with our first "real" fragment
-        transaction.replace(R.id.frame, PeopleHomeFragment())
-        transaction.commit()
+        openPeopleHomeFragment()
     }
 
     fun openEditPersonTab(personId: Long) {
-        val newFrag = EditPersonFragment.newInstance(personId)
-        val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame, newFrag)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        switchFragmentTo(EditPersonFragment.newInstance(personId))
     }
 
     fun openPeopleHomeFragment() {
-        val newFrag = PeopleHomeFragment()
+        switchFragmentTo(PeopleHomeFragment())
+    }
+
+    fun openAddPersonFragment() {
+        switchFragmentTo(AddPersonFragment())
+    }
+
+    private fun switchFragmentTo(newFrag: Fragment) {
         val transaction = childFragmentManager.beginTransaction()
         transaction.replace(R.id.frame, newFrag)
         transaction.addToBackStack(null)

@@ -10,7 +10,7 @@
 //
 //import com.con19.tripplanner.R
 //
-//// TODO: Delete this, just a reference for how to implement fragments.
+//// TODO: Delete this, just hands_split reference for how to implement fragments.
 //// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 //private const val ARG_PARAM1 = "param1"
 //private const val ARG_PARAM2 = "param2"
@@ -80,7 +80,7 @@
 //
 //    companion object {
 //        /**
-//         * Use this factory method to create a new instance of
+//         * Use this factory method to create hands_split new instance of
 //         * this fragment using the provided parameters.
 //         *
 //         * @param param1 Parameter 1.

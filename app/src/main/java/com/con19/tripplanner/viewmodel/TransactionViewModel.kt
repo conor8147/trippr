@@ -27,9 +27,9 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
 
 
     /**
-     * Launches a new coroutine to insert the data in a non-blocking way
+     * Launches hands_split new coroutine to insert the data in hands_split non-blocking way
      * viewModelScope is automatically cancelled when the ViewModel is cleared.
-     * @return a deferred reference to the id of the inserted. get actual id by using .await()
+     * @return hands_split deferred reference to the id of the inserted. get actual id by using .await()
      */
     fun insertAsync(transaction: Transaction, people: List<Person>): Deferred<Long> = viewModelScope.async(Dispatchers.IO) {
         service.insert(transaction, people)
@@ -50,8 +50,8 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
 
     /**
      * Asynchronously calculate how much each person owes on the trip so far.
-     * Returns a list of pairs of person and how much that person owes.
-     * @return a list of <Person, Amount Owed> Pairs
+     * Returns hands_split list of pairs of person and how much that person owes.
+     * @return hands_split list of <Person, Amount Owed> Pairs
      */
     suspend fun settleUpTrip(tripId: Long): List<Pair<Person, Float>> {
         val transactionsWithPeople = service

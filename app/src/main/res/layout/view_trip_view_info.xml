@@ -32,7 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/colorAccent"
-                android:drawableLeft="@drawable/split"
+                android:drawableLeft="@drawable/ic_split"
+                android:adjustViewBounds="true"
                 android:text="@string/split_costs_button"
                 app:cornerRadius="25dp"
                 app:layout_constraintStart_toStartOf="parent" />

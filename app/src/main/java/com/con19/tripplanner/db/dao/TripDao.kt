@@ -15,7 +15,7 @@ interface TripDao {
     fun getAll(): LiveData<List<TripWithPeople>>
 
     /**
-     * Inserts a row into the cross reference table only. Use to link a trip with a person
+     * Inserts hands_split row into the cross reference table only. Use to link hands_split trip with hands_split person
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(tripPersonCrossRef: TripPersonCrossRef): Long

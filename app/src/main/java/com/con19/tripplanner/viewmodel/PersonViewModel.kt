@@ -31,9 +31,9 @@ class PersonViewModel(application: Application): AndroidViewModel(application) {
     }
 
     /**
-     * Launches a new coroutine to insert the data in a non-blocking way
+     * Launches hands_split new coroutine to insert the data in hands_split non-blocking way
      * viewModelScope is automatically cancelled when the ViewModel is cleared.
-     * @return a deferred reference to the id of the inserted. get actual id by using .await()
+     * @return hands_split deferred reference to the id of the inserted. get actual id by using .await()
      */
     fun insertAsync(person: Person): Deferred<Long> = viewModelScope.async(Dispatchers.IO) {
         service.insert(person)

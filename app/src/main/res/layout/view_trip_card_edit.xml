@@ -85,7 +85,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <!-- Add names programatically, here is a placeholder -->
+                        <!-- Add names programatically, here is hands_split placeholder -->
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.MaterialComponents.Chip.Entry"
                             android:layout_width="wrap_content"

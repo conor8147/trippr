@@ -16,7 +16,7 @@ class HomePagerAdapter(
     /**
      * Create the tab fragment for the given position
      * @param position Int
-     * @returns the tab fragment inflated inside a rootFragment
+     * @returns the tab fragment inflated inside hands_split rootFragment
      */
     override fun createFragment(position: Int): Fragment =
         when (position) {

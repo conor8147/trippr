@@ -138,7 +138,6 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
     }
 
     override fun onSplitCostsClicked() {
-        Log.i("yeet", "yeet yeet")
         val df = DecimalFormat("#.##")
         lifecycleScope.launch {
             // running this inside an async launch thing as it may take quite some time to finish.
