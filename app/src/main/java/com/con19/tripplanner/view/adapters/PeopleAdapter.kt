@@ -48,7 +48,7 @@ class PeopleAdapter internal constructor(
         val currentPerson = peopleList[position]
 
         holder.apply {
-            name.text = currentPerson.nickname + ' ' + currentPerson.personId.toString()
+            name.text = currentPerson.nickname
             view.setOnClickListener {
                 listener?.onPersonClicked(currentPerson.personId)
             }

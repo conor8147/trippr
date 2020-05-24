@@ -27,7 +27,8 @@ class MainActivity :
     TripViewFragment.TripViewListener,
     AddReceiptFragment.AddReceiptFragmentListener,
     AddPersonFragment.AddPersonFragmentListener,
-    PeopleHomeFragment.PeopleHomeFragmentListener
+    PeopleHomeFragment.PeopleHomeFragmentListener,
+    EditPersonFragment.EditPersonFragmentListener
 {
 
     private lateinit var viewPager: ViewPager2
@@ -149,7 +150,7 @@ class MainActivity :
         tripsTabFragment.openTripViewFragment(tripId)
     }
 
-    override fun onPersonAdded() {
+    override fun onFinished() {
         peopleTabFragment.openPeopleHomeFragment()
     }
 

@@ -10,6 +10,7 @@ import com.con19.tripplanner.model.PersonService
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 /**
  * Provides methods for accessing the PersonDao
@@ -43,5 +44,11 @@ class PersonViewModel(application: Application): AndroidViewModel(application) {
         return allPeople.value?.find { person ->
             person.personId == personId
         }
+    }
+
+    fun updatePerson(person: Person, name: String, number: String) = viewModelScope.launch {
+        person.nickname = name
+        person.phoneNumber = number
+        service.update(person)
     }
 }

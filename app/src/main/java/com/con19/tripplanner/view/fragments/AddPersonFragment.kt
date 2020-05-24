@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
 
 import com.con19.tripplanner.R
@@ -35,23 +34,31 @@ class AddPersonFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val layout = inflater.inflate(R.layout.fragment_edit_person, container, false)
-        layout.findViewById<MaterialToolbar>(R.id.topAppBar).title = getString(R.string.add_person)
+        val toolbar = layout.findViewById<MaterialToolbar>(R.id.topAppBar)
         val nameTextInput = layout.findViewById<TextInputLayout>(R.id.nameTextInput)
         val numberTextInput = layout.findViewById<TextInputLayout>(R.id.numberTextInput)
 
-        layout.findViewById<MaterialToolbar>(R.id.topAppBar).setOnMenuItemClickListener {
-            if (it.itemId == R.id.add) {
-                addPerson(nameTextInput.editText?.text.toString(),
-                    numberTextInput.editText?.text.toString())
+        toolbar.apply {
+            title = getString(R.string.add_person)
+            setNavigationOnClickListener {
+                listener?.onFinished()
             }
-            true
+            setOnMenuItemClickListener {
+                if (it.itemId == R.id.add) {
+                    addPerson(
+                        nameTextInput.editText?.text.toString(),
+                        numberTextInput.editText?.text.toString()
+                    )
+                }
+                true
+            }
         }
         return layout
     }
 
-    fun addPerson(name: String, number: String) {
+    private fun addPerson(name: String, number: String) {
         personViewModel.insertAsync(Person(name, number))
-        listener?.onPersonAdded()
+        listener?.onFinished()
     }
 
     override fun onAttach(context: Context) {
@@ -69,6 +76,6 @@ class AddPersonFragment : Fragment() {
     }
 
     interface AddPersonFragmentListener {
-        fun onPersonAdded()
+        fun onFinished()
     }
 }

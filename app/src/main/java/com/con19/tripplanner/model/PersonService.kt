@@ -13,6 +13,10 @@ class PersonService(private val personDao: PersonDao) {
 
     suspend fun insert(person: Person) = personDao.insert(person)
 
+    suspend fun update(person: Person) {
+        personDao.update(person)
+    }
+
     companion object {
         private var INSTANCE: PersonService? = null
 

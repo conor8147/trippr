@@ -2,10 +2,12 @@ package com.con19.tripplanner.view.fragments
 
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.preference.EditTextPreference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.con19.tripplanner.R
@@ -31,5 +33,10 @@ class SettingsHomeFragment : Fragment() {
 class PreferencesFragment: PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preference_screen)
+        var bankEditTextPreference : EditTextPreference? = findPreference("Bank Details") as EditTextPreference?
+        bankEditTextPreference?.setOnBindEditTextListener {
+            it.inputType = InputType.TYPE_CLASS_NUMBER
+        }
+
     }
 }
