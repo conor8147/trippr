@@ -12,6 +12,8 @@ import com.con19.tripplanner.db.entities.TransactionWithPeople
  */
 class TransactionService(private val transactionDao: TransactionDao) {
 
+    val allTransactions: LiveData<List<TransactionWithPeople>> = transactionDao.getAll()
+
     fun getTransactionsForTripWithId(tripId: Long): LiveData<List<TransactionWithPeople>> =
         transactionDao.getTransactionsForTripWithId(tripId)
 
@@ -29,6 +31,19 @@ class TransactionService(private val transactionDao: TransactionDao) {
             )
         }
         return transactionId
+    }
+
+    suspend fun update(transaction: Transaction, people: List<Person>) {
+        transactionDao.update(transaction)
+        transactionDao.deletePeopleFromCrossRefForTransactionWithId(transaction.transactionId)
+        people.forEach {
+            transactionDao.insert(
+                TransactionPersonCrossRef(
+                    transaction.transactionId,
+                    it.personId
+                )
+            )
+        }
     }
 
     suspend fun addPersonToTransaction(transactionId: Long, personId: Long) {
@@ -52,6 +67,10 @@ class TransactionService(private val transactionDao: TransactionDao) {
     suspend fun changeTransactionPaidStatus(transactionId: Long, newPaidStatus: Boolean) {
         transactionDao.updatePaidStatusForTransaction(transactionId, newPaidStatus)
     }
+
+    suspend fun getTransactionWithId(transactionId: Long): TransactionWithPeople? =
+        transactionDao.getTransactionWithId(transactionId)
+
 
     companion object {
         private var INSTANCE: TransactionService? = null

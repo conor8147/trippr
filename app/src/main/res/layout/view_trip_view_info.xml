@@ -8,7 +8,12 @@
 
     <include
         android:id="@+id/includedLayout"
-        layout="@layout/view_trip_card_no_title" />
+        layout="@layout/view_trip_card_no_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="wrap_content"

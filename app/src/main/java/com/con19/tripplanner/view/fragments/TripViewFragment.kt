@@ -30,7 +30,6 @@ import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 
 
-const val TRIP_ID = "trip_id"
 
 class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterListener {
     private val TAG = this::class.simpleName
@@ -117,22 +116,6 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
         listener = null
     }
 
-    interface TripViewListener {
-        fun onBackSelected()
-        fun onErrorOpeningTripViewFragment()
-        fun onAddReceiptButtonClicked(tripId: Long)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(tripId: Long) =
-            TripViewFragment().apply {
-                arguments = Bundle().apply {
-                    putLong(TRIP_ID, tripId)
-                }
-            }
-    }
-
     override fun onAddReceiptButtonClicked() {
         tripId?.let { listener?.onAddReceiptButtonClicked(it) }
     }
@@ -153,5 +136,27 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
 //        sendIntent.data = Uri.parse("sms:")
 //        sendIntent.putExtra("sms_body", "Howdy doooo")
 //        ContextCompat.startActivity(requireContext(), sendIntent, null)
+    }
+
+    override fun onTransactionSelected(transactionId: Long) {
+        tripId?.let { listener?.onTransactionSelected(it, transactionId) }
+    }
+
+    interface TripViewListener {
+        fun onBackSelected()
+        fun onErrorOpeningTripViewFragment()
+        fun onAddReceiptButtonClicked(tripId: Long)
+        fun onTransactionSelected(tripId: Long, transactionId: Long)
+    }
+
+    companion object {
+        private const val TRIP_ID = "trip_id"
+        @JvmStatic
+        fun newInstance(tripId: Long) =
+            TripViewFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(TRIP_ID, tripId)
+                }
+            }
     }
 }

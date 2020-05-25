@@ -11,7 +11,7 @@ interface TransactionDao {
 
     // LiveData class: https://codelabs.developers.google.com/codelabs/android-room-with-a-view-kotlin/#5
     @androidx.room.Transaction
-    @Query ("SELECT * FROM transactions")
+    @Query("SELECT * FROM transactions")
     fun getAll(): LiveData<List<TransactionWithPeople>>
 
     @androidx.room.Transaction
@@ -25,8 +25,16 @@ interface TransactionDao {
     @Query("UPDATE transactions SET paid = :newPaidStatus WHERE transactionId = :transactionId")
     suspend fun updatePaidStatusForTransaction(transactionId: Long, newPaidStatus: Boolean)
 
+    @androidx.room.Transaction
+    @Query("DELETE FROM transaction_person_cross_ref WHERE transactionId = :transactionId")
+    fun deletePeopleFromCrossRefForTransactionWithId(transactionId: Long)
+
+    @androidx.room.Transaction
+    @Query("SELECT * FROM transactions WHERE transactionId = :transactionId")
+    suspend fun getTransactionWithId(transactionId: Long): TransactionWithPeople?
+
     @Insert
-    suspend fun insert(transaction : Transaction): Long
+    suspend fun insert(transaction: Transaction): Long
 
     /**
      * Inserts hands_split row into the cross reference table only. Use to link hands_split transaction with hands_split person
@@ -42,4 +50,7 @@ interface TransactionDao {
      */
     @Delete
     suspend fun delete(transactionPersonCrossRef: TransactionPersonCrossRef)
+
+    @Update
+    fun update(transaction: Transaction)
 }

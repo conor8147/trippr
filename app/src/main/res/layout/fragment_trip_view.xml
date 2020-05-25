@@ -30,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:navigationIcon="@drawable/ic_karrow_left"
-                app:liftOnScroll="true"/>
+                app:liftOnScroll="tru.
+                e"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
