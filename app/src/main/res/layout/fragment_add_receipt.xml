@@ -15,9 +15,11 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:background="@color/light_top_app_bar"
+            app:titleTextColor="@color/greyText"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_karrow_left"
+            app:navigationIcon="@drawable/ic_karrow_left_dark"
             app:title="@string/new_receipt" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -114,6 +116,7 @@
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipGroup"
                     android:layout_width="0dp"
+                    android:paddingBottom="30dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="@+id/addPersonEditText"
                     app:layout_constraintHorizontal_bias="0.0"

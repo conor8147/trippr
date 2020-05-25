@@ -133,12 +133,20 @@ class TransactionsAdapter internal constructor(
                 context.getString(R.string.paid) + ": "
             }
             position <= getPaidTitlePosition() -> {
-                unPaidTransactions[position - (getUnpaidTitlePosition() + 1)].transaction.name
+                val transaction = unPaidTransactions[position - (getUnpaidTitlePosition() + 1)].transaction
+                holder.view.setOnClickListener {
+                    listener.onTransactionSelected(transaction.transactionId)
+                }
+                transaction.name
             }
             else -> {
+                val transaction = paidTransactions[position - (getPaidTitlePosition() + 1)].transaction
                 holder.textView.alpha = 0.3F
                 holder.view.imageView.alpha = 0.3F
-                paidTransactions[position - (getPaidTitlePosition() + 1)].transaction.name
+                holder.view.setOnClickListener {
+                    listener.onTransactionSelected(transaction.transactionId)
+                }
+                transaction.name
             }
         }
     }
@@ -162,6 +170,7 @@ class TransactionsAdapter internal constructor(
     interface TransactionsAdapterListener {
         fun onAddReceiptButtonClicked()
         fun onSplitCostsClicked()
+        fun onTransactionSelected(transactionId: Long)
     }
 
     companion object {

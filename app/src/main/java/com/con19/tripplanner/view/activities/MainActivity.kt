@@ -146,6 +146,10 @@ class MainActivity :
         tripsTabFragment.openAddReceiptFragment(tripId)
     }
 
+    override fun onTransactionSelected(tripId: Long, transactionId: Long) {
+        tripsTabFragment.openEditReceiptFragment(tripId, transactionId)
+    }
+
     override fun onReceiptFragmentBackButtonPressed(tripId: Long) {
         tripsTabFragment.openTripViewFragment(tripId)
     }

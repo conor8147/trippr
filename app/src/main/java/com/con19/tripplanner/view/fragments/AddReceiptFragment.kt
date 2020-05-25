@@ -25,21 +25,20 @@ import java.util.*
 import kotlin.properties.Delegates
 
 
-class AddReceiptFragment private constructor() : Fragment() {
+open class AddReceiptFragment protected constructor() : Fragment() {
 
-    private var listener: AddReceiptFragmentListener? = null
-
-    private var tripId by Delegates.notNull<Long>()
     private var tripWithPeople: TripWithPeople? = null
-    private lateinit var transactionViewModel: TransactionViewModel
     private lateinit var tripViewModel: TripViewModel
-    private lateinit var nameEditText: EditText
-    private lateinit var costEditText: EditText
-    private lateinit var addPersonEditText: AutoCompleteTextView
-    private lateinit var chipGroup: ChipGroup
-    private lateinit var receiptPhoto: ImageView
 
-    private var addedPeople: MutableList<Person> = mutableListOf()
+    protected var listener: AddReceiptFragmentListener? = null
+    protected lateinit var transactionViewModel: TransactionViewModel
+    protected lateinit var nameEditText: EditText
+    protected lateinit var costEditText: EditText
+    private lateinit var addPersonEditText: AutoCompleteTextView
+    protected lateinit var chipGroup: ChipGroup
+    protected lateinit var receiptPhoto: ImageView
+    protected var tripId by Delegates.notNull<Long>()
+    protected var addedPeople: MutableList<Person> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,13 +62,13 @@ class AddReceiptFragment private constructor() : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val layout: View = inflater.inflate(R.layout.fragment_add_receipt, container, false)
         initViews(layout)
         return layout
     }
 
-    private fun initViews(layout: View) {
+    internal open fun initViews(layout: View) {
         nameEditText = layout.findViewById(R.id.nameEditText)
         costEditText = layout.findViewById(R.id.costEditText)
         addPersonEditText = layout.findViewById(R.id.addPersonEditText)
@@ -89,14 +88,15 @@ class AddReceiptFragment private constructor() : Fragment() {
 
         addPersonEditText.setAdapter(adapter)
         addPersonEditText.apply {
-            setOnFocusChangeListener { _, hasFocus->
+            setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     showDropDown()
                 }
             }
             setOnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_DONE &&
-                    peopleNames?.find{ text.toString().toLowerCase() == it.toLowerCase() } != null) {
+                    peopleNames?.find { text.toString().toLowerCase() == it.toLowerCase() } != null
+                ) {
                     // TODO deal with what to do if person is not already in group
                     val name = text.toString().capitalize()
                     val chip = Chip(context)
@@ -111,12 +111,12 @@ class AddReceiptFragment private constructor() : Fragment() {
         }
 
         receiptPhoto.setOnLongClickListener {
-            submitNewTransaction()
+            submitTransaction()
             true
         }
     }
 
-    fun submitNewTransaction() {
+    protected open fun submitTransaction() {
         //TODO deal with wrong number of decimal places
         val price = costEditText.text.toString().toFloatOrNull()
         val name = nameEditText.text.toString()
@@ -149,7 +149,7 @@ class AddReceiptFragment private constructor() : Fragment() {
     }
 
     companion object {
-        private const val TRIP_ID = "tripId"
+        internal const val TRIP_ID = "tripId"
 
         @JvmStatic
         fun newInstance(tripId: Long) =
