@@ -22,7 +22,7 @@
             <!-- Media -->
             <ImageView
                 android:id="@+id/trip_photo"
-                android:layout_width="130dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/content_description_media"
                 android:scaleType="centerCrop"
@@ -55,16 +55,19 @@
 
                 <!-- Buttons -->
                 <LinearLayout
-                    android:layout_width="215dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="8dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/trip_people"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipSpacingVertical="-5dp"
+                        app:singleLine="false">
 
                         <!-- Add names programatically, here is hands_split placeholder -->
                         <com.google.android.material.chip.Chip
