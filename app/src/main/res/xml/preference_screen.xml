@@ -30,8 +30,9 @@
         <EditTextPreference
             android:id="@+id/account"
             android:icon="@drawable/ic_money"
-            android:defaultValue="Account Number"
-            android:inputType="number"
+            android:defaultValue=""
+            android:inputType="numberDecimal"
+            android:digits="0123456789"
             android:key="edit_text_preference_1"
             android:selectAllOnFocus="true"
             android:singleLine="true"

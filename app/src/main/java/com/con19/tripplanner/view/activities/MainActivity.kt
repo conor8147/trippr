@@ -28,7 +28,9 @@ class MainActivity :
     AddReceiptFragment.AddReceiptFragmentListener,
     AddPersonFragment.AddPersonFragmentListener,
     PeopleHomeFragment.PeopleHomeFragmentListener,
-    EditPersonFragment.EditPersonFragmentListener
+    EditPersonFragment.EditPersonFragmentListener,
+    TripsHomeFragment.TripsHomeFragmentListener,
+    AddTripFragment.AddTripFragmentListener
 {
 
     private lateinit var viewPager: ViewPager2
@@ -150,6 +152,10 @@ class MainActivity :
         tripsTabFragment.openEditReceiptFragment(tripId, transactionId)
     }
 
+    override fun onFABSelected() {
+        tripsTabFragment.openAddTripFragment()
+    }
+
     override fun onReceiptFragmentBackButtonPressed(tripId: Long) {
         tripsTabFragment.openTripViewFragment(tripId)
     }
@@ -160,5 +166,9 @@ class MainActivity :
 
     override fun onAddPersonClicked() {
         peopleTabFragment.openAddPersonFragment()
+    }
+
+    override fun onTripFragmentBackButtonPressed() {
+        tripsTabFragment.openTripHomeFragment()
     }
 }

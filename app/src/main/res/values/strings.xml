@@ -27,4 +27,8 @@
     <string name="add_person">Add Person</string>
     <string name="submit_changes_button">Submit Changes Button</string>
     <string name="topappbar">topAppBar</string>
+    <string name="edit_trip">Edit Trip</string>
+    <string name="edit_person">Edit Person</string>
+    <string name="new_trip">New Trip</string>
+    <string name="date">Date</string>
 </resources>
