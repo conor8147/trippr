@@ -26,7 +26,7 @@ class SplashScreen : AppCompatActivity() {
     }
 
     suspend fun loadAppThenOpen() {
-        delay(10000L)
+        delay(3000L)
         startActivity(
             Intent(this, MainActivity::class.java)
         )
