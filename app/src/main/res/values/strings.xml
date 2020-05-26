@@ -31,4 +31,6 @@
     <string name="edit_person">Edit Person</string>
     <string name="new_trip">New Trip</string>
     <string name="date">Date</string>
+    <string name="add_receipt">Add Receipt</string>
+    <string name="edit_receipt">Edit Receipt</string>
 </resources>

@@ -2,10 +2,15 @@ package com.con19.tripplanner.view.fragments
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import com.con19.tripplanner.R
 import com.con19.tripplanner.db.entities.Person
 import com.con19.tripplanner.db.entities.Transaction
 import com.con19.tripplanner.db.entities.TransactionWithPeople
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
@@ -28,6 +33,13 @@ class EditReceiptFragment() : AddReceiptFragment() {
         }
 
         lifecycleScope.launch{ getTransaction() }
+    }
+
+    override fun setToolbarListeners() {
+        super.setToolbarListeners()
+        toolbar.apply {
+            title = context.getString(R.string.edit_receipt)
+        }
     }
 
     private suspend fun getTransaction() {

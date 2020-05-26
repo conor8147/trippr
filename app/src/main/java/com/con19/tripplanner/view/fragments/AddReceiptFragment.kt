@@ -36,7 +36,7 @@ open class AddReceiptFragment protected constructor() : Fragment() {
     protected lateinit var nameEditText: EditText
     protected lateinit var costEditText: EditText
     private lateinit var addPersonEditText: AutoCompleteTextView
-    private lateinit var toolbar: MaterialToolbar
+    protected lateinit var toolbar: MaterialToolbar
     protected lateinit var chipGroup: ChipGroup
     protected lateinit var receiptPhoto: ImageView
     protected var tripId by Delegates.notNull<Long>()
@@ -68,7 +68,14 @@ open class AddReceiptFragment protected constructor() : Fragment() {
         val layout: View = inflater.inflate(R.layout.fragment_add_receipt, container, false)
         initViews(layout)
 
+        setToolbarListeners()
+
+        return layout
+    }
+
+    protected open fun setToolbarListeners() {
         toolbar.apply {
+            title = context.getString(R.string.add_receipt)
             setNavigationOnClickListener {
                 listener?.onReceiptFragmentBackButtonPressed(tripId)
             }
@@ -78,8 +85,6 @@ open class AddReceiptFragment protected constructor() : Fragment() {
                 true
             }
         }
-
-        return layout
     }
 
     internal open fun initViews(layout: View) {
