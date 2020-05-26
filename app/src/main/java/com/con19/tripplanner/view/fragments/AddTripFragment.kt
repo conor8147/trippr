@@ -2,6 +2,7 @@ package com.con19.tripplanner.view.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import com.con19.tripplanner.viewmodel.TripViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
 
 
@@ -39,6 +41,9 @@ open class AddTripFragment() : Fragment() {
     private lateinit var toolbar: MaterialToolbar
     private var addedPeople: MutableList<Person> = mutableListOf()
 
+    private lateinit var startDate : Date
+    private lateinit var endDate : Date
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         tripViewModel = ViewModelProvider(requireActivity())
@@ -53,6 +58,8 @@ open class AddTripFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val layout: View = inflater.inflate(R.layout.fragment_add_trip, container, false)
+        val builder = MaterialDatePicker.Builder.dateRangePicker()
+        val picker = builder.build()
         initViews(layout)
 
         toolbar.apply {
@@ -62,6 +69,14 @@ open class AddTripFragment() : Fragment() {
             setOnMenuItemClickListener {
                 submitTrip()
                 true
+            }
+        }
+
+        dateEditText.setOnClickListener {
+            picker.show(childFragmentManager, picker.toString())
+            picker.addOnPositiveButtonClickListener { dates ->
+                startDate = dates.first?.let { it -> Date(it) }!!
+                endDate = dates.second?.let { it -> Date(it) }!!
             }
         }
 
@@ -118,8 +133,7 @@ open class AddTripFragment() : Fragment() {
     protected open fun submitTrip() {
         val name = nameEditText.text.toString()
 
-        val startDate = Date()
-        val endDate = Date()
+
         val newTrip = tripViewModel.insertAsync(
             Trip(name, startDate, endDate, null),
             addedPeople

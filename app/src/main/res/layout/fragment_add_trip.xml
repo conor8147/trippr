@@ -84,17 +84,20 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
+                    app:startIconDrawable="@drawable/ic_date_range"
                     android:hint="@string/date"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tripCoverPhoto">
 
+
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/datePicker"
-                        android:inputType="numberDecimal"
+                        android:inputType="none"
+                        android:clickable="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:selectAllOnFocus="true" />
+                        android:focusable="false" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <AutoCompleteTextView

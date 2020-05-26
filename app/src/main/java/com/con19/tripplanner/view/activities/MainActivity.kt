@@ -42,7 +42,6 @@ class MainActivity :
 
     private lateinit var personViewModel: PersonViewModel
     private lateinit var transactionViewModel: TransactionViewModel
-    // TODO: Jasmine to initialise TripViewModel here and set below
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
