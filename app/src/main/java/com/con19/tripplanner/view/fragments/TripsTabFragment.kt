@@ -54,6 +54,12 @@ class TripsTabFragment: Fragment() {
         )
     }
 
+    fun openEditTripFragment(tripId: Long) {
+        replaceCurrentFragmentWith(
+            EditTripFragment.newInstance(tripId)
+        )
+    }
+
     private fun replaceCurrentFragmentWith(newFrag: Fragment) {
         val transaction = childFragmentManager.beginTransaction()
         transaction.replace(R.id.frame, newFrag)

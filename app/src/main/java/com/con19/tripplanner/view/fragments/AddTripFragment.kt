@@ -26,9 +26,9 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
 
 
-open class AddTripFragment() : Fragment() {
+open class AddTripFragment : Fragment() {
 
-    private var listener: AddTripFragmentListener? = null
+    protected var listener: AddTripFragmentListener? = null
     private lateinit var tripViewModel: TripViewModel
     private lateinit var personViewModel: PersonViewModel
     private var allPeople: List<Person>? = null
@@ -38,7 +38,7 @@ open class AddTripFragment() : Fragment() {
     private lateinit var addPersonEditText: AutoCompleteTextView
     private lateinit var chipGroup: ChipGroup
     private lateinit var tripCoverPhoto: ImageView
-    private lateinit var toolbar: MaterialToolbar
+    protected lateinit var toolbar: MaterialToolbar
     private var addedPeople: MutableList<Person> = mutableListOf()
 
     private lateinit var startDate : Date
@@ -62,15 +62,7 @@ open class AddTripFragment() : Fragment() {
         val picker = builder.build()
         initViews(layout)
 
-        toolbar.apply {
-            setNavigationOnClickListener {
-                listener?.onTripFragmentBackButtonPressed()
-            }
-            setOnMenuItemClickListener {
-                submitTrip()
-                true
-            }
-        }
+        setToolbarListeners()
 
         dateEditText.setOnClickListener {
             picker.show(childFragmentManager, picker.toString())
@@ -81,6 +73,22 @@ open class AddTripFragment() : Fragment() {
         }
 
         return layout
+    }
+
+    protected open fun setToolbarListeners() {
+        toolbar.apply {
+            setNavigationOnClickListener {
+                navigateBack()
+            }
+            setOnMenuItemClickListener {
+                submitTrip()
+                true
+            }
+        }
+    }
+
+    protected open fun navigateBack() {
+        listener?.onTripFragmentBackButtonPressed()
     }
 
     internal open fun initViews(layout: View) {
@@ -132,8 +140,6 @@ open class AddTripFragment() : Fragment() {
 
     protected open fun submitTrip() {
         val name = nameEditText.text.toString()
-
-
         val newTrip = tripViewModel.insertAsync(
             Trip(name, startDate, endDate, null),
             addedPeople
@@ -159,6 +165,7 @@ open class AddTripFragment() : Fragment() {
 
     interface AddTripFragmentListener {
         fun onTripFragmentBackButtonPressed()
+        fun onEditTripBackPressed(tripId: Long)
     }
 
 
