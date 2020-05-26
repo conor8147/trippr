@@ -19,6 +19,7 @@ import com.con19.tripplanner.db.entities.Transaction
 import com.con19.tripplanner.db.entities.TripWithPeople
 import com.con19.tripplanner.viewmodel.TransactionViewModel
 import com.con19.tripplanner.viewmodel.TripViewModel
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import java.util.*
@@ -35,6 +36,7 @@ open class AddReceiptFragment protected constructor() : Fragment() {
     protected lateinit var nameEditText: EditText
     protected lateinit var costEditText: EditText
     private lateinit var addPersonEditText: AutoCompleteTextView
+    private lateinit var toolbar: MaterialToolbar
     protected lateinit var chipGroup: ChipGroup
     protected lateinit var receiptPhoto: ImageView
     protected var tripId by Delegates.notNull<Long>()
@@ -65,6 +67,18 @@ open class AddReceiptFragment protected constructor() : Fragment() {
     ): View {
         val layout: View = inflater.inflate(R.layout.fragment_add_receipt, container, false)
         initViews(layout)
+
+        toolbar.apply {
+            setNavigationOnClickListener {
+                listener?.onReceiptFragmentBackButtonPressed(tripId)
+            }
+            setOnMenuItemClickListener {
+                // TODO set an error message if you dont put one of the things
+                submitTransaction()
+                true
+            }
+        }
+
         return layout
     }
 
@@ -74,6 +88,7 @@ open class AddReceiptFragment protected constructor() : Fragment() {
         addPersonEditText = layout.findViewById(R.id.addPersonEditText)
         chipGroup = layout.findViewById(R.id.chipGroup)
         receiptPhoto = layout.findViewById(R.id.receipt_photo)
+        toolbar = layout.findViewById<MaterialToolbar>(R.id.topAppBar)
 
         val peopleNames = tripWithPeople?.people?.map { it.nickname }
 
@@ -108,11 +123,6 @@ open class AddReceiptFragment protected constructor() : Fragment() {
                 }
                 true
             }
-        }
-
-        receiptPhoto.setOnLongClickListener {
-            submitTransaction()
-            true
         }
     }
 

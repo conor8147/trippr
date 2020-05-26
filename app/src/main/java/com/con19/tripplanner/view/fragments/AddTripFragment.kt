@@ -113,11 +113,6 @@ open class AddTripFragment() : Fragment() {
                 true
             }
         }
-
-        tripCoverPhoto.setOnLongClickListener {
-            submitTrip()
-            true
-        }
     }
 
     protected open fun submitTrip() {
