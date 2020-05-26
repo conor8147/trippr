@@ -18,4 +18,15 @@
     <string name="add_receipt_button">" Ajouter un reçu"</string>
     <string name="split_costs_button">" Coûts partagés"</string>
     <string name="preferences">Préférences</string>
+    <string name="new_receipt">Nouveau reçu</string>
+    <string name="cost">Coût</string>
+    <string name="add_person">Ajouter une personne</string>
+    <string name="submit_changes_button">" Bouton Soumettre les modifications"</string>
+    <string name="topappbar">" topAppBar"</string>
+    <string name="edit_trip">Modifier le voyage</string>
+    <string name="edit_person">" Modifier la personne"</string>
+    <string name="new_trip">" Nouveau voyage"</string>
+    <string name="date">Date</string>
+    <string name="add_receipt">" Ajouter un reçu"</string>
+    <string name="edit_receipt">Modifier le reçu</string>
 </resources>

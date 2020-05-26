@@ -33,4 +33,5 @@
     <string name="date">Date</string>
     <string name="add_receipt">Add Receipt</string>
     <string name="edit_receipt">Edit Receipt</string>
+    <string name="edit_trip">Edit Trip</string>
 </resources>
