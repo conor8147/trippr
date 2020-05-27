@@ -24,6 +24,7 @@ import com.con19.tripplanner.viewmodel.TransactionViewModel
 import com.con19.tripplanner.viewmodel.TripViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -39,11 +40,13 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
     private lateinit var tripViewModel: TripViewModel
     private lateinit var transactionViewModel: TransactionViewModel
     private var trip: TripWithPeople? = null
+    private lateinit var toolbar: MaterialToolbar
 
     private var listener: TripViewListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         tripViewModel = ViewModelProvider(requireActivity())
             .get(TripViewModel::class.java)
         transactionViewModel = ViewModelProvider(requireActivity())
@@ -65,12 +68,19 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
         savedInstanceState: Bundle?
     ): View? {
         val layout = inflater.inflate(R.layout.fragment_trip_view, container, false)
+        toolbar = layout.findViewById<MaterialToolbar>(R.id.topAppBar)
         layout.findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout).title =
             trip?.trip?.tripName ?: "Trip Not Found"
         initialiseRecyclerView(layout)
 
         layout.findViewById<MaterialToolbar>(R.id.topAppBar).setNavigationOnClickListener {
             listener?.onBackSelected()
+        }
+
+        layout.findViewById<MaterialToolbar>(R.id.topAppBar)?.setOnMenuItemClickListener { _ ->
+            tripId?.let { listener?.onEditClicked(it) }
+            Log.v("Edit", "Clicked edit");
+            true
         }
 
         return layout
@@ -147,6 +157,7 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
         fun onErrorOpeningTripViewFragment()
         fun onAddReceiptButtonClicked(tripId: Long)
         fun onTransactionSelected(tripId: Long, transactionId: Long)
+        fun onEditClicked(tripId: Long)
     }
 
     companion object {

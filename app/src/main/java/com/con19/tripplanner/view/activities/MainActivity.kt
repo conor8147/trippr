@@ -164,6 +164,10 @@ class MainActivity :
         tripsTabFragment.openEditReceiptFragment(tripId, transactionId)
     }
 
+    override fun onEditClicked(tripId: Long) {
+        tripsTabFragment.openEditTripFragment(tripId)
+    }
+
     override fun onFABSelected() {
         tripsTabFragment.openAddTripFragment()
     }
@@ -182,5 +186,9 @@ class MainActivity :
 
     override fun onTripFragmentBackButtonPressed() {
         tripsTabFragment.openTripHomeFragment()
+    }
+
+    override fun onEditTripBackPressed(tripId: Long) {
+        tripsTabFragment.openTripViewFragment(tripId)
     }
 }
