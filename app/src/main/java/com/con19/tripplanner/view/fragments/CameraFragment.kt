@@ -102,7 +102,7 @@ class CameraFragment : Fragment() {
                     this, cameraSelector, preview, imageCapture)
                 preview?.setSurfaceProvider(viewFinder.createSurfaceProvider(camera?.cameraInfo))
             } catch(exc: Exception) {
-                Log.e(TAG, "Use case binding failed", exc)
+                //Log.e(TAG, "Use case binding failed", exc)
             }
 
         }, ContextCompat.getMainExecutor(requireContext()))
@@ -130,7 +130,7 @@ class CameraFragment : Fragment() {
         imageCapture.takePicture(
             outputOptions, ContextCompat.getMainExecutor(requireContext()), object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
-                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+                    //Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {

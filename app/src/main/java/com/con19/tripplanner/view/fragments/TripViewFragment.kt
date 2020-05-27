@@ -59,7 +59,6 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
         trip = tripId?.let { tripViewModel.getTripById(it) }
 
         if (trip == null) {
-            Log.e(TAG, "Error opening TripViewFragment, tripId was $tripId")
             listener?.onErrorOpeningTripViewFragment()
         }
     }
@@ -80,7 +79,6 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
 
         layout.findViewById<MaterialToolbar>(R.id.topAppBar)?.setOnMenuItemClickListener { _ ->
             tripId?.let { listener?.onEditClicked(it) }
-            Log.v("Edit", "Clicked edit");
             true
         }
 
