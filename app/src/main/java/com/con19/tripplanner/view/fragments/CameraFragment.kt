@@ -18,9 +18,6 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.con19.tripplanner.R
-import com.con19.tripplanner.view.activities.PhotoType
-import com.con19.tripplanner.viewmodel.TransactionViewModel
-import com.con19.tripplanner.viewmodel.TripViewModel
 import kotlinx.android.synthetic.main.camera_viewfinder.*
 import java.io.File
 import java.text.SimpleDateFormat

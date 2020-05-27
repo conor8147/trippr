@@ -45,6 +45,6 @@
         android:src="@drawable/ic_add_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@android:color/white" />
+        app:tint="@color/fab_button_tint" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

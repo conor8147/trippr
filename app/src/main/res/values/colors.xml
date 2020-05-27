@@ -7,4 +7,9 @@
     <color name="divider">#1A000000</color>
     <color name="greyText">#7A000000</color>
     <color name="light_top_app_bar" >#FFFFFF</color>
+    <color name="tab_layout_background">#FFFFFF</color>
+    <color name="fab_button_tint">#FFFFFF</color>
+    <color name="body_text_color">#CC000000</color>
+    <color name="overline_caps_color">#000000</color>
+    <color name="top_app_bar_text">#FFFFFF</color>
 </resources>
