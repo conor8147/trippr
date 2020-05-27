@@ -27,7 +27,7 @@ interface TransactionDao {
 
     @androidx.room.Transaction
     @Query("DELETE FROM transaction_person_cross_ref WHERE transactionId = :transactionId")
-    fun deletePeopleFromCrossRefForTransactionWithId(transactionId: Long)
+    suspend fun deletePeopleFromCrossRefForTransactionWithId(transactionId: Long)
 
     @androidx.room.Transaction
     @Query("SELECT * FROM transactions WHERE transactionId = :transactionId")

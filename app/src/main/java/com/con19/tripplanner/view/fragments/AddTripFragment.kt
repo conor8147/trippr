@@ -1,8 +1,8 @@
 package com.con19.tripplanner.view.fragments
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +11,12 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.con19.tripplanner.R
 import com.con19.tripplanner.db.entities.Person
 import com.con19.tripplanner.db.entities.Trip
-import com.con19.tripplanner.db.entities.TripWithPeople
 import com.con19.tripplanner.viewmodel.PersonViewModel
 import com.con19.tripplanner.viewmodel.TripViewModel
 import com.google.android.material.appbar.MaterialToolbar
@@ -26,23 +26,29 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
 
 
-open class AddTripFragment : Fragment() {
+open class AddTripFragment : Fragment(), CameraFragment.CameraListener {
 
     protected var listener: AddTripFragmentListener? = null
     private lateinit var tripViewModel: TripViewModel
     private lateinit var personViewModel: PersonViewModel
     private var allPeople: List<Person>? = null
 
-    private lateinit var nameEditText: EditText
-    private lateinit var dateEditText: EditText
+    protected lateinit var nameEditText: EditText
+    protected lateinit var dateEditText: EditText
     private lateinit var addPersonEditText: AutoCompleteTextView
-    private lateinit var chipGroup: ChipGroup
-    private lateinit var tripCoverPhoto: ImageView
+    protected lateinit var chipGroup: ChipGroup
+    protected lateinit var tripCoverPhoto: ImageView
     protected lateinit var toolbar: MaterialToolbar
-    private var addedPeople: MutableList<Person> = mutableListOf()
+    protected var addedPeople: MutableList<Person> = mutableListOf()
 
-    private lateinit var startDate : Date
-    private lateinit var endDate : Date
+    protected var tripPhotoUri: String? = null
+    // flag to decide whether to delete the current photo after this fragment is closed.
+    protected var tripPhotoSaved = false
+
+    protected lateinit var startDate: Date
+    protected lateinit var endDate: Date
+
+    private var cameraFragment: CameraFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +94,10 @@ open class AddTripFragment : Fragment() {
     }
 
     protected open fun navigateBack() {
-        listener?.onTripFragmentBackButtonPressed()
+        if (!tripPhotoSaved) {
+            deletePhoto(tripPhotoUri)
+        }
+        listener?.onAddTripFragmentFinished()
     }
 
     internal open fun initViews(layout: View) {
@@ -112,7 +121,6 @@ open class AddTripFragment : Fragment() {
                 }
             }
 
-
         addPersonEditText.setAdapter(adapter)
         addPersonEditText.apply {
             setOnFocusChangeListener { _, hasFocus ->
@@ -120,6 +128,7 @@ open class AddTripFragment : Fragment() {
                     showDropDown()
                 }
             }
+
             setOnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_DONE &&
                     peopleNames?.find { text.toString().toLowerCase() == it.toLowerCase() } != null
@@ -127,7 +136,7 @@ open class AddTripFragment : Fragment() {
                     // TODO deal with what to do if person is not already in group
                     val name = text.toString().capitalize()
                     val chip = Chip(context)
-                        allPeople?.find { it.nickname.capitalize() == name }
+                    allPeople?.find { it.nickname.capitalize() == name }
                         ?.let { addedPeople.add(it) }
                     chip.text = name
                     chipGroup.addView(chip)
@@ -135,19 +144,57 @@ open class AddTripFragment : Fragment() {
                 }
                 true
             }
+
+            tripCoverPhoto.setOnClickListener {
+                openCamera()
+            }
         }
     }
 
     protected open fun submitTrip() {
         val name = nameEditText.text.toString()
-        val newTrip = tripViewModel.insertAsync(
-            Trip(name, startDate, endDate, null),
+        tripViewModel.insertAsync(
+            Trip(
+                name,
+                startDate,
+                endDate,
+                tripPhotoUri
+            ),
             addedPeople
         )
-        listener?.onTripFragmentBackButtonPressed()
-
+        tripPhotoSaved = true
+        listener?.onAddTripFragmentFinished()
     }
 
+    /**
+     * Inflates CameraFragment over the current layout.
+     */
+    private fun openCamera() {
+        cameraFragment = CameraFragment.newInstance(PhotoType.transaction)
+        val fragManager = childFragmentManager
+        val transaction = fragManager.beginTransaction()
+
+        cameraFragment?.let { transaction.add(R.id.camera_container, it) }
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private fun closeCamera() {
+        val fragManager = childFragmentManager
+        val transaction = fragManager.beginTransaction()
+        cameraFragment?.let { transaction.remove(it) }
+        transaction.commit()
+    }
+
+    override fun onPhotoTaken(uri: Uri) {
+        closeCamera()
+        tripPhotoUri = uri.toString()
+        tripCoverPhoto.setImageURI(uri)
+    }
+
+    override fun onCameraError() {
+        // TODO Not yet implemented, still not sure if these will be necessary
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -161,12 +208,26 @@ open class AddTripFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         this.listener = null
+        if (!tripPhotoSaved) {
+            deletePhoto(tripPhotoUri)
+        }
     }
+
+    /**
+     * Given the Uri of an image as a string, delete that image.
+     */
+    protected fun deletePhoto(imageUri: String?) {
+        if (imageUri.isNullOrEmpty()) {
+            return
+        }
+        val file = Uri.parse(imageUri).toFile()
+        file.delete()
+    }
+
 
     interface AddTripFragmentListener {
-        fun onTripFragmentBackButtonPressed()
+        fun onAddTripFragmentFinished()
         fun onEditTripBackPressed(tripId: Long)
     }
-
 
 }

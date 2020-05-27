@@ -46,4 +46,10 @@ class TripViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun update(trip: Trip, people: MutableList<Person>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            service.update(trip, people)
+        }
+    }
+
 }

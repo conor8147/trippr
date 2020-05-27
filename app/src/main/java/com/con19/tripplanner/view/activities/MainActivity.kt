@@ -184,7 +184,7 @@ class MainActivity :
         peopleTabFragment.openAddPersonFragment()
     }
 
-    override fun onTripFragmentBackButtonPressed() {
+    override fun onAddTripFragmentFinished() {
         tripsTabFragment.openTripHomeFragment()
     }
 

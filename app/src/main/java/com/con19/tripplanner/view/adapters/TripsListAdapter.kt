@@ -1,6 +1,7 @@
 package com.con19.tripplanner.view.adapters
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -62,7 +63,7 @@ class TripsListAdapter internal constructor(
         holder.tripDates.text =
             "${startDate} - ${endDate}"
         holder.tripPeople.removeAllViews()
-        // holder.tripPhoto.setImageResource(currentTrip.coverPhoto)
+        currentTripWithMembers.trip.coverPhoto?.let { holder.tripPhoto.setImageURI(Uri.parse(it)) }
         currentTripWithMembers.people.forEach {
             val name = it.nickname
             val chip = Chip(context)

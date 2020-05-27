@@ -2,10 +2,7 @@ package com.con19.tripplanner.model
 
 import androidx.lifecycle.LiveData
 import com.con19.tripplanner.db.dao.TripDao
-import com.con19.tripplanner.db.entities.Person
-import com.con19.tripplanner.db.entities.Trip
-import com.con19.tripplanner.db.entities.TripPersonCrossRef
-import com.con19.tripplanner.db.entities.TripWithPeople
+import com.con19.tripplanner.db.entities.*
 
 class TripService private constructor(private val tripDao: TripDao) {
     // by lazy just gets doesn't make it until it is used
@@ -39,6 +36,19 @@ class TripService private constructor(private val tripDao: TripDao) {
                 personId
             )
         )
+    }
+
+    suspend fun update(trip: Trip, people: MutableList<Person>) {
+        tripDao.update(trip)
+        tripDao.deletePeopleFromCrossRefForTripWithId(trip.tripId)
+        people.forEach {
+            tripDao.insert(
+                TripPersonCrossRef(
+                    trip.tripId,
+                    it.personId
+                )
+            )
+        }
     }
 
     companion object {

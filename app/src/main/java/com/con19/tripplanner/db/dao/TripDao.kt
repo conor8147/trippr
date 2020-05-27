@@ -44,5 +44,9 @@ interface TripDao {
 
     @Query("DELETE FROM trips")
     suspend fun deleteAll()
+
+    @androidx.room.Transaction
+    @Query("DELETE FROM trippersoncrossref WHERE tripId = :tripId")
+    suspend fun deletePeopleFromCrossRefForTripWithId(tripId: Long)
 }
 

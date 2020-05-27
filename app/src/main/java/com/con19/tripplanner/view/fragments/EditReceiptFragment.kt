@@ -23,9 +23,9 @@ import kotlin.properties.Delegates
 class EditReceiptFragment : AddReceiptFragment() {
 
     private var transactionId by Delegates.notNull<Long>()
-    private var transactionWithPeople: TransactionWithPeople? = null
-    private var transaction: Transaction? = null
-    private var peopleOnTransaction: List<Person>? = null
+    private lateinit var transactionWithPeople: TransactionWithPeople
+    private lateinit var transaction: Transaction
+    private lateinit var peopleOnTransaction: List<Person>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,7 @@ class EditReceiptFragment : AddReceiptFragment() {
             transactionId = it.getLong(TRANSACTION_ID)
         }
 
-        lifecycleScope.launch{ getTransaction() }
+        lifecycleScope.launch { getTransaction() }
     }
 
     override fun setToolbarListeners() {
@@ -44,41 +44,37 @@ class EditReceiptFragment : AddReceiptFragment() {
     }
 
     private suspend fun getTransaction() {
-        transactionWithPeople =
-            transactionViewModel.getTransactionById(transactionId) ?:
-            // TODO: handle this gracefully
-            throw Resources.NotFoundException()
-        transaction = transactionWithPeople?.transaction
-        peopleOnTransaction = transactionWithPeople?.people
-        nameEditText.setText(transaction?.name)
-        costEditText.setText(transaction?.cost.toString())
+        transactionWithPeople = transactionViewModel.getTransactionById(transactionId) ?:
+                // TODO: handle this gracefully
+                throw Resources.NotFoundException()
+        transaction = transactionWithPeople.transaction
+        peopleOnTransaction = transactionWithPeople.people
+        nameEditText.setText(transaction.name)
+        costEditText.setText(transaction.cost.toString())
         chipGroup.removeAllViews()
-        peopleOnTransaction?.forEach { person ->
-            val chip = Chip(context)
+        peopleOnTransaction.forEach { person ->
+            addedPeople.add(person)
+            val chip = Chip(requireContext())
             chip.text = person.nickname
             chipGroup.addView(chip)
         }
-
-        if (!transaction?.image.isNullOrEmpty()) {
-            receiptImageView.setImageURI(Uri.parse(transaction?.image))
+        if (!transaction.image.isNullOrEmpty()) {
+            receiptImageView.setImageURI(Uri.parse(transaction.image))
         }
     }
-
 
     override fun submitTransaction() {
         //TODO deal with wrong number of decimal places or null cost
         val price = costEditText.text.toString().toFloatOrNull()
         val name = nameEditText.text.toString()
         if (price != null) {
-            transaction?.let {
-                if (!receiptPhotoUri.isNullOrEmpty()) {
-                    deletePhoto(it.image)
-                    it.image = receiptPhotoUri
-                }
-                it.cost = price
-                it.name = name
-                transactionViewModel.update(it, addedPeople)
+            if (!receiptPhotoUri.isNullOrEmpty()) {
+                deletePhoto(transaction.image)
+                transaction.image = receiptPhotoUri
             }
+            transaction.cost = price
+            transaction.name = name
+            transactionViewModel.update(transaction, addedPeople)
             listener?.onReceiptFragmentBackButtonPressed(tripId)
         }
     }

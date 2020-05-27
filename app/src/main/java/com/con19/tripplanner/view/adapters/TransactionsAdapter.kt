@@ -2,6 +2,7 @@ package com.con19.tripplanner.view.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,7 +54,7 @@ class TransactionsAdapter internal constructor(
     class HeaderViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val datesView: TextView = view.includedLayout.trip_dates
         val chipGroup: ChipGroup = view.includedLayout.trip_people
-        val receiptPhoto: ImageView = view.includedLayout.trip_photo
+        val coverPhotoImageView: ImageView = view.includedLayout.trip_photo
         val addReceiptButton: Button = view.addReceiptButton
         val splitCostsButton: Button = view.splitCostsButton
     }
@@ -119,6 +120,8 @@ class TransactionsAdapter internal constructor(
         holder.splitCostsButton.setOnClickListener {
             listener.onSplitCostsClicked()
         }
+
+        tripWithPeople.trip.coverPhoto?.let { holder.coverPhotoImageView.setImageURI(Uri.parse(it)) }
     }
 
     private fun populateTransactionCards(
