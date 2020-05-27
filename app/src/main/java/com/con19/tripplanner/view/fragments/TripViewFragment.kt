@@ -28,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.lang.StringBuilder
 import java.text.DecimalFormat
 
 
@@ -132,20 +133,23 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
 
     override fun onSplitCostsClicked() {
         val df = DecimalFormat("#.##")
+        val message = StringBuilder()
+            .append("Time to settle up for your trip ${trip?.trip?.tripName}. Here's how much everyone owes:\n")
+
         lifecycleScope.launch {
             // running this inside an async launch thing as it may take quite some time to finish.
             val peopleCostsMap: List<Pair<Person, Float>>? =
                 tripId?.let { transactionViewModel.settleUpTrip(it) }
             peopleCostsMap?.forEach {
-                Log.i("Yeet", "Person: " + it.first.nickname)
-                Log.i("Yeet", "Amount owed: " + df.format(it.second) + "\n")
+                message.append("${it.first.nickname} owes \$${it.second}\n")
+                message.append("${it.first.phoneNumber},")
             }
-        }
+            val sendIntent = Intent(Intent.ACTION_SENDTO)
+            sendIntent.data = Uri.parse("smsto:" + message.toString())
+            sendIntent.putExtra("sms_body", message.toString())
+            ContextCompat.startActivity(requireContext(), sendIntent, null)
 
-//        val sendIntent = Intent(Intent.ACTION_VIEW)
-//        sendIntent.data = Uri.parse("sms:")
-//        sendIntent.putExtra("sms_body", "Howdy doooo")
-//        ContextCompat.startActivity(requireContext(), sendIntent, null)
+        }
     }
 
     override fun onTransactionSelected(transactionId: Long) {

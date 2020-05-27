@@ -68,25 +68,6 @@
                         android:layout_height="wrap_content"
                         app:chipSpacingVertical="-5dp"
                         app:singleLine="false">
-
-                        <!-- Add names programatically, here is hands_split placeholder -->
-                        <com.google.android.material.chip.Chip
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/placeholderPersonName"
-                            android:textStyle="bold" />
-                        <com.google.android.material.chip.Chip
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/placeholderPersonName"
-                            android:textStyle="bold" />
-                        <com.google.android.material.chip.Chip
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Anguss"
-                            android:textStyle="bold" />
-
-
                     </com.google.android.material.chip.ChipGroup>
 
                 </LinearLayout>
