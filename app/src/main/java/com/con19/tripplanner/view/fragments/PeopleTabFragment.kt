@@ -42,7 +42,6 @@ class PeopleTabFragment : Fragment() {
     private fun switchFragmentTo(newFrag: Fragment) {
         val transaction = childFragmentManager.beginTransaction()
         transaction.replace(R.id.frame, newFrag)
-        transaction.addToBackStack(null)
         transaction.commit()
     }
 }

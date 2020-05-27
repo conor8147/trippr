@@ -1,25 +1,26 @@
 package com.con19.tripplanner.view.fragments
 
 import android.content.res.Resources
+import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import androidx.core.net.toFile
 import androidx.lifecycle.lifecycleScope
 import com.con19.tripplanner.R
 import com.con19.tripplanner.db.entities.Person
 import com.con19.tripplanner.db.entities.Transaction
 import com.con19.tripplanner.db.entities.TransactionWithPeople
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.launch
+import java.io.File
 import kotlin.properties.Delegates
+
 
 /**
  * A simple extension of Add Receipt that pre-populates the layout fields with the receipt details and
  * updates the current transaction instead of adding a new one on submit.
  */
-class EditReceiptFragment() : AddReceiptFragment() {
+class EditReceiptFragment : AddReceiptFragment() {
 
     private var transactionId by Delegates.notNull<Long>()
     private var transactionWithPeople: TransactionWithPeople? = null
@@ -57,6 +58,10 @@ class EditReceiptFragment() : AddReceiptFragment() {
             chip.text = person.nickname
             chipGroup.addView(chip)
         }
+
+        if (!transaction?.image.isNullOrEmpty()) {
+            receiptImageView.setImageURI(Uri.parse(transaction?.image))
+        }
     }
 
 
@@ -65,9 +70,13 @@ class EditReceiptFragment() : AddReceiptFragment() {
         val price = costEditText.text.toString().toFloatOrNull()
         val name = nameEditText.text.toString()
         if (price != null) {
-            transaction?.cost = price
-            transaction?.name
             transaction?.let {
+                if (!receiptPhotoUri.isNullOrEmpty()) {
+                    deletePhoto(it.image)
+                    it.image = receiptPhotoUri
+                }
+                it.cost = price
+                it.name = name
                 transactionViewModel.update(it, addedPeople)
             }
             listener?.onReceiptFragmentBackButtonPressed(tripId)

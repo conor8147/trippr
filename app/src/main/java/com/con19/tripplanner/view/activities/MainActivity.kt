@@ -30,8 +30,7 @@ class MainActivity :
     PeopleHomeFragment.PeopleHomeFragmentListener,
     EditPersonFragment.EditPersonFragmentListener,
     TripsHomeFragment.TripsHomeFragmentListener,
-    AddTripFragment.AddTripFragmentListener
-{
+    AddTripFragment.AddTripFragmentListener {
 
     private lateinit var viewPager: ViewPager2
 
@@ -109,22 +108,36 @@ class MainActivity :
     }
 
     /**
-     * A bit of hands_split hack, but necessary for back in nested fragments to work properly
+     * Yes the double nesting is gross, but it's kinda necessary for the nested camera-in-add-transaction-in-trips-tab thing.
+     * Any more nesting than that, and there will need to be a better way of doing this.
+     *
+     * Jasmine I'm so sorry
      */
     override fun onBackPressed() {
-        // if there is hands_split fragment and the back stack of this fragment is not empty,
+        // if there is a fragment and the back stack of this fragment is not empty,
         // then emulate 'onBackPressed' behaviour, because in default, it is not working
         val fm = supportFragmentManager
         for (frag in fm.fragments) {
             if (frag.isVisible) {
                 val childFm = frag.childFragmentManager
-                if (childFm.backStackEntryCount > 0) {
-                    childFm.popBackStack()
-                    return
+                if (childFm.fragments.size > 0) {
+                    for (nestedFrag in childFm.fragments) {
+                        if (nestedFrag.isVisible) {
+                            val nestedChildFm = nestedFrag.childFragmentManager
+                            if (nestedChildFm.backStackEntryCount > 0) {
+                                nestedChildFm.popBackStack()
+                                return
+                            }
+                        }
+                    }
+                    if (childFm.backStackEntryCount > 0) {
+                        childFm.popBackStack()
+                        return
+                    }
                 }
             }
+            super.onBackPressed()
         }
-        super.onBackPressed()
     }
 
     override fun onPersonClicked(personId: Long) {

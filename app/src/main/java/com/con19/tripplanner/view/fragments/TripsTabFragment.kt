@@ -24,7 +24,9 @@ class TripsTabFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        openTripHomeFragment()
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame, TripsHomeFragment())
+        transaction.commit()
     }
 
     fun openTripViewFragment(tripId: Long) {
