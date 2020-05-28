@@ -2,14 +2,11 @@ package com.con19.tripplanner.view.fragments
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -26,13 +23,8 @@ import com.con19.tripplanner.viewmodel.TransactionViewModel
 import com.con19.tripplanner.viewmodel.TripViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.StringBuilder
 import java.text.DecimalFormat
-
 
 
 class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterListener {

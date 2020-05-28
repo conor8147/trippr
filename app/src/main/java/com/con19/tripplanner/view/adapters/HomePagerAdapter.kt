@@ -8,7 +8,7 @@ class HomePagerAdapter(
     parent: AppCompatActivity,
     private val tripsTabFragment: Fragment,
     private val peopleTabFragment: Fragment,
-    private val settingsTabFragment: Fragment
+    private val settingsFragment: Fragment
 ) : FragmentStateAdapter(parent) {
 
     override fun getItemCount(): Int = 3
@@ -22,7 +22,7 @@ class HomePagerAdapter(
         when (position) {
             TRIPS_POSITION -> tripsTabFragment
             PEOPLE_POSITION -> peopleTabFragment
-            else -> settingsTabFragment
+            else -> settingsFragment
         }
 
 

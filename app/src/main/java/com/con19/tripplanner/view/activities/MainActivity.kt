@@ -39,7 +39,7 @@ class MainActivity :
 
     private val tripsTabFragment = TripsTabFragment()
     private val peopleTabFragment = PeopleTabFragment()
-    private val currentSettingsTabFragment = SettingsTabFragment()
+    private val currentSettingsTabFragment = SettingsFragment()
 
     private var firstTimeOpening = true
 

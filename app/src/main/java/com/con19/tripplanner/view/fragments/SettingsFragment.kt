@@ -15,7 +15,7 @@ import com.con19.tripplanner.R
 /**
  * Fragment for the Settings Tab.
  */
-class SettingsHomeFragment : Fragment() {
+class SettingsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
