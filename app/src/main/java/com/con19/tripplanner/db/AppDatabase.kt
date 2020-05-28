@@ -59,14 +59,14 @@ abstract class AppDatabase : RoomDatabase() {
 
             val testPeople = listOf(
                 Person("Conor", "0273785420"),
-                Person("Nick", "24532"),
-                Person("Angus", "4323432"),
+                Person("Nick", "0220999999"),
+                Person("Angus", "021456890"),
                 Person("Charlotte", "0273785420"),
-                Person("James", "24532"),
-                Person("Ted", "4323432"),
-                Person("Sam", "4323432"),
-                Person("Kevin", "432343232"),
-                Person("Bobby", "4323435335")
+                Person("James", "027123478"),
+                Person("Ted", "0223456789"),
+                Person("Sam", "0213428596"),
+                Person("Kevin", "021232321"),
+                Person("Bobby", "021888888")
             )
 
             testPeople.forEach {
@@ -79,11 +79,11 @@ abstract class AppDatabase : RoomDatabase() {
             tripDao.deleteAll()
 
             val testTrips = listOf(
-                Trip("Ski Trip", Date(), Date(), null),
-                Trip("Friday Drinks", Date(), Date(), null),
-                Trip("Weekend Climb", Date(), Date(), null),
-                Trip("Hanmer Springs", Date(), Date(), null),
-                Trip("West Coast", Date(), Date(), null)
+                Trip("Ski Trip", Date(2020, 3, 12), Date(2020, 3, 25), null),
+                Trip("Friday Drinks", Date(2020, 1, 1), Date(2020, 6, 1), null),
+                Trip("Weekend Climb", Date(2020, 4, 13), Date(2020, 4, 16), null),
+                Trip("Hanmer Springs", Date(2020, 2, 2), Date(2020, 2, 3), null),
+                Trip("West Coast", Date(2019, 12, 20), Date(2019, 12, 31), null)
 
             )
 
@@ -100,17 +100,17 @@ abstract class AppDatabase : RoomDatabase() {
 
         suspend fun populateTransactionsDatabase(transactionDao: TransactionDao) {
             val testTransactions = listOf(
-                Transaction("Dinner @ Moes", Date(), tripIds[0], false, 33.59F, null),
-                Transaction("Ski hire", Date(), tripIds[0], true, 33.59F, null),
-                Transaction("Lunch @ Coronet", Date(), tripIds[0], false, 33.59F, null),
+                Transaction("Dinner @ Moes", Date(), tripIds[0], false, 150.59F, null),
+                Transaction("Ski hire", Date(), tripIds[0], true, 200.00F, null),
+                Transaction("Lunch @ Coronet", Date(), tripIds[0], false, 45.80F, null),
                 Transaction("Booze", Date(), tripIds[0], false, 33.59F, null),
-                Transaction("Girls", Date(), tripIds[0], false, 33.59F, null),
-                Transaction("The Devil's Lettuce", Date(), tripIds[0], true, 420F, null),
-                Transaction("Dinner @ Burger Burger", Date(), tripIds[0], false, 33.59F, null),
-                Transaction("Mondays Groceries", Date(), tripIds[0], true, 33.59F, null),
-                Transaction("Bubble Tea", Date(), tripIds[0], true, 33.59F, null),
-                Transaction("Fish and Chips", Date(), tripIds[0], false, 33.59F, null),
-                Transaction("Breakfast @ Heritage", Date(), tripIds[0], false, 33.59F, null)
+                Transaction("Girls", Date(), tripIds[0], false, 40.50F, null),
+                Transaction("The Devil's Lettuce", Date(), tripIds[0], true, 42.0F, null),
+                Transaction("Dinner @ Burger Burger", Date(), tripIds[0], false, 73.59F, null),
+                Transaction("Mondays Groceries", Date(), tripIds[0], true, 15.99F, null),
+                Transaction("Bubble Tea", Date(), tripIds[0], true, 6.50F, null),
+                Transaction("Fish and Chips", Date(), tripIds[0], false, 25.99F, null),
+                Transaction("Breakfast @ Heritage", Date(), tripIds[0], false, 189.99F, null)
             )
 
             testTransactions.forEach {

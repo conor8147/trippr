@@ -59,7 +59,6 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
         trip = tripId?.let { tripViewModel.getTripById(it) }
 
         if (trip == null) {
-            Log.e(TAG, "Error opening TripViewFragment, tripId was $tripId")
             listener?.onErrorOpeningTripViewFragment()
         }
     }
@@ -80,7 +79,6 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
 
         layout.findViewById<MaterialToolbar>(R.id.topAppBar)?.setOnMenuItemClickListener { _ ->
             tripId?.let { listener?.onEditClicked(it) }
-            Log.v("Edit", "Clicked edit");
             true
         }
 
@@ -132,20 +130,22 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
     }
 
     override fun onSplitCostsClicked() {
-        val df = DecimalFormat("#.##")
+        val df = DecimalFormat("#.00")
         val message = StringBuilder()
             .append("Time to settle up for your trip ${trip?.trip?.tripName}. Here's how much everyone owes:\n")
+
+        val phoneNumbers = StringBuilder()
 
         lifecycleScope.launch {
             // running this inside an async launch thing as it may take quite some time to finish.
             val peopleCostsMap: List<Pair<Person, Float>>? =
                 tripId?.let { transactionViewModel.settleUpTrip(it) }
             peopleCostsMap?.forEach {
-                message.append("${it.first.nickname} owes \$${it.second}\n")
-                message.append("${it.first.phoneNumber},")
+                message.append("${it.first.nickname} owes \$${df.format(it.second)}\n")
+                phoneNumbers.append("${it.first.phoneNumber},")
             }
             val sendIntent = Intent(Intent.ACTION_SENDTO)
-            sendIntent.data = Uri.parse("smsto:" + message.toString())
+            sendIntent.data = Uri.parse("smsto:" + phoneNumbers.toString())
             sendIntent.putExtra("sms_body", message.toString())
             ContextCompat.startActivity(requireContext(), sendIntent, null)
 
