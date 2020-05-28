@@ -33,7 +33,7 @@ class SettingsHomeFragment : Fragment() {
 class PreferencesFragment: PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preference_screen)
-        var bankEditTextPreference : EditTextPreference? = findPreference("Bank Details") as EditTextPreference?
+        val bankEditTextPreference : EditTextPreference? = findPreference("bank_details") as EditTextPreference?
         bankEditTextPreference?.setOnBindEditTextListener {
             it.inputType = InputType.TYPE_CLASS_NUMBER
         }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:layout_width="match_parent"
@@ -20,6 +21,7 @@
         <EditTextPreference
             android:id="@+id/account"
             android:icon="@drawable/ic_money"
+            app:key="bank_details"
             android:defaultValue=""
             android:inputType="numberDecimal"
             android:digits="0123456789"

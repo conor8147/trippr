@@ -2,6 +2,7 @@ package com.con19.tripplanner.view.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
@@ -131,8 +133,11 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
 
     override fun onSplitCostsClicked() {
         val df = DecimalFormat("#.00")
+        val accountNumber = PreferenceManager
+            .getDefaultSharedPreferences(requireContext())
+            .getString("bank_details", "(None Provided)")
         val message = StringBuilder()
-            .append("Time to settle up for your trip ${trip?.trip?.tripName}. Here's how much everyone owes:\n")
+            .append("Time to settle up for your trip ${trip?.trip?.tripName}. Here's how much everyone owes:\n\n")
 
         val phoneNumbers = StringBuilder()
 
@@ -144,6 +149,8 @@ class TripViewFragment : Fragment(), TransactionsAdapter.TransactionsAdapterList
                 message.append("${it.first.nickname} owes \$${df.format(it.second)}\n")
                 phoneNumbers.append("${it.first.phoneNumber},")
             }
+
+            message.append("\nPayable to: $accountNumber")
             val sendIntent = Intent(Intent.ACTION_SENDTO)
             sendIntent.data = Uri.parse("smsto:" + phoneNumbers.toString())
             sendIntent.putExtra("sms_body", message.toString())
