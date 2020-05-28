@@ -58,11 +58,11 @@ abstract class AppDatabase : RoomDatabase() {
             personDao.deleteAll()
 
             val testPeople = listOf(
-                Person("Conor", "0273785420"),
-                Person("Nick", "0220999999"),
-                Person("Angus", "021456890"),
-                Person("Charlotte", "0273785420"),
-                Person("James", "027123478"),
+                Person("Chris", "0273785420"),
+                Person("Max", "0220999999"),
+                Person("Olivia", "021456890"),
+                Person("Ben", "0273785420"),
+                Person("Sophie", "027123478"),
                 Person("Ted", "0223456789"),
                 Person("Sam", "0213428596"),
                 Person("Kevin", "021232321"),
@@ -100,12 +100,9 @@ abstract class AppDatabase : RoomDatabase() {
 
         suspend fun populateTransactionsDatabase(transactionDao: TransactionDao) {
             val testTransactions = listOf(
-                Transaction("Dinner @ Moes", Date(), tripIds[0], false, 150.59F, null),
+                Transaction("Dinner @ Moe's", Date(), tripIds[0], false, 150.59F, null),
                 Transaction("Ski hire", Date(), tripIds[0], true, 200.00F, null),
                 Transaction("Lunch @ Coronet", Date(), tripIds[0], false, 45.80F, null),
-                Transaction("Booze", Date(), tripIds[0], false, 33.59F, null),
-                Transaction("Girls", Date(), tripIds[0], false, 40.50F, null),
-                Transaction("The Devil's Lettuce", Date(), tripIds[0], true, 42.0F, null),
                 Transaction("Dinner @ Burger Burger", Date(), tripIds[0], false, 73.59F, null),
                 Transaction("Mondays Groceries", Date(), tripIds[0], true, 15.99F, null),
                 Transaction("Bubble Tea", Date(), tripIds[0], true, 6.50F, null),
