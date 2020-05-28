@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/background"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".view.activities.MainActivity">
+    android:layout_height="match_parent">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/pager"
+    <LinearLayout
+        android:id="@+id/main_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:orientation="vertical"
+        tools:context=".view.activities.MainActivity">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_gravity="center_horizontal"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/tab_layout_background"
+            android:elevation="7dp"
+            app:tabIndicatorColor="@android:color/transparent"
+            app:tabTextAppearance="@style/CustomTabTextStyle"
+            app:tabTextColor="@color/colorAccent">
+        </com.google.android.material.tabs.TabLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/splash_screen_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/tab_layout_background"
-        android:elevation="7dp"
-        app:tabTextAppearance="@style/CustomTabTextStyle"
-        app:tabTextColor="@color/colorAccent"
-        app:tabIndicatorColor="@android:color/transparent" >
-    </com.google.android.material.tabs.TabLayout>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+    </LinearLayout>
+</FrameLayout>

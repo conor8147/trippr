@@ -1,13 +1,14 @@
 package com.con19.tripplanner.view.activities
 
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.con19.tripplanner.R
 import com.con19.tripplanner.view.adapters.HomePagerAdapter
 import com.con19.tripplanner.view.adapters.PeopleAdapter
-import com.con19.tripplanner.view.adapters.TransactionsAdapter
 import com.con19.tripplanner.view.adapters.TripsListAdapter
 import com.con19.tripplanner.view.fragments.*
 import com.con19.tripplanner.viewmodel.PersonViewModel
@@ -15,6 +16,8 @@ import com.con19.tripplanner.viewmodel.TransactionViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * Entry point to the app.
@@ -38,19 +41,38 @@ class MainActivity :
     private val peopleTabFragment = PeopleTabFragment()
     private val currentSettingsTabFragment = SettingsTabFragment()
 
-
-    private lateinit var personViewModel: PersonViewModel
-    private lateinit var transactionViewModel: TransactionViewModel
+    private var firstTimeOpening = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        if (firstTimeOpening) {
+            loadApp()
+            firstTimeOpening = false
+        }
         initialisePager()
+    }
 
-        personViewModel = ViewModelProvider(this)
-            .get(PersonViewModel::class.java)
-        transactionViewModel = ViewModelProvider(this)
-            .get(TransactionViewModel::class.java)
+    /**
+     * Display the loading screen while the database info is collected and displayed on the home screen.
+     */
+    private fun loadApp() {
+        val splashScreen = SplashScreenFragment()
+        val mainContainer = findViewById<LinearLayout>(R.id.main_container)
+        val fragmentManager = supportFragmentManager
+
+        // Hide app and replace with splash screen
+        fragmentManager.beginTransaction()
+            .add(R.id.splash_screen_container, splashScreen)
+            .commit()
+
+        // Asynchronously wait to reveal the app once it is loaded.
+        lifecycleScope.launch {
+            delay(3000L)
+            fragmentManager.beginTransaction()
+                .remove(splashScreen)
+                .commit()
+        }
     }
 
     /**

@@ -23,6 +23,7 @@
             <!-- Media -->
             <ImageView
                 android:id="@+id/trip_photo"
+                android:orientation="vertical"
                 android:layout_width="130dp"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/content_description_media"
