@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.con19.tripplanner.R
 import com.con19.tripplanner.db.entities.TripWithPeople
 import com.con19.tripplanner.view.activities.MainActivity
@@ -18,7 +20,8 @@ import java.text.SimpleDateFormat
 
 
 class TripsListAdapter internal constructor(
-    private val context: Context
+    private val context: Context,
+    private val parent: Fragment
 ) : RecyclerView.Adapter<TripsListAdapter.TripViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -63,7 +66,11 @@ class TripsListAdapter internal constructor(
         holder.tripDates.text =
             "${startDate} - ${endDate}"
         holder.tripPeople.removeAllViews()
-        currentTripWithMembers.trip.coverPhoto?.let { holder.tripPhoto.setImageURI(Uri.parse(it)) }
+        currentTripWithMembers.trip.coverPhoto?.let {
+            Glide.with(parent)
+                .load(Uri.parse(it))
+                .into(holder.tripPhoto)
+        }
         currentTripWithMembers.people.forEach {
             val name = it.nickname
             val chip = Chip(context)

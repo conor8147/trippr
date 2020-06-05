@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.con19.tripplanner.R
 import com.con19.tripplanner.view.adapters.TripsListAdapter
 import com.con19.tripplanner.viewmodel.TripViewModel
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.lang.RuntimeException
 
@@ -67,8 +66,7 @@ class TripsHomeFragment : Fragment() {
     private fun createRecyclerView(view: View) {
         val viewManager = LinearLayoutManager(requireContext())
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
-        val tripsListAdapter = TripsListAdapter(requireContext()
-        )
+        val tripsListAdapter = TripsListAdapter(requireContext(), this)
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
